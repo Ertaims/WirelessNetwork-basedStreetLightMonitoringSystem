@@ -23,13 +23,12 @@
 *********************************************************************************/
 int main(void)
 {
-	// OLED_Init();
 	// PWM_Init();
 	Delay_ms(1000);
 
-	ESP8266_Init();
+	// ESP8266_Init();
 	
-	while(ESP8266_ConnectMQTT())
+	// while(ESP8266_ConnectMQTT())
 
 	while(1)
 	{

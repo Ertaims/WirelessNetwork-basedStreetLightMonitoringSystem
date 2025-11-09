@@ -2,6 +2,7 @@
 
 void PWM_Init(void)
 {
+	// 使能GPIOA和TIM2时钟
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	
@@ -16,8 +17,8 @@ void PWM_Init(void)
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
 	TIM_TimeBaseInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseInitStructure.TIM_Period = 100 - 1;			//ARR
-	TIM_TimeBaseInitStructure.TIM_Prescaler = 72 - 1;			//PSC
+	TIM_TimeBaseInitStructure.TIM_Period = 100 - 1;			// ARR(自动重装载值)
+	TIM_TimeBaseInitStructure.TIM_Prescaler = 72 - 1;			// PSC(预分频值)
 	TIM_TimeBaseInitStructure.TIM_RepetitionCounter = 0;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseInitStructure); 
 	
