@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/cxk/backEnd/build",
+  "command": "/usr/bin/g++  -I/home/cxk/backEnd/src -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o -c /home/cxk/backEnd/src/main.cpp",
+  "file": "/home/cxk/backEnd/src/main.cpp"
+},
+{
+  "directory": "/home/cxk/backEnd/build",
+  "command": "/usr/bin/g++  -I/home/cxk/backEnd/src -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o -c /home/cxk/backEnd/src/mqtt/MQTTClientCpp.cpp",
+  "file": "/home/cxk/backEnd/src/mqtt/MQTTClientCpp.cpp"
+},
+{
+  "directory": "/home/cxk/backEnd/build",
+  "command": "/usr/bin/g++  -I/home/cxk/backEnd/src -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o -c /home/cxk/backEnd/src/core/LampMonitor.cpp",
+  "file": "/home/cxk/backEnd/src/core/LampMonitor.cpp"
+}
+]

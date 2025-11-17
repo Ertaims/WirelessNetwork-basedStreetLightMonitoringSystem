@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o -o streetlight-monitor-backend  -Wl,-rpath,/usr/local/lib /usr/local/lib/libpaho-mqttpp3.so /usr/local/lib/libpaho-mqtt3a.so 
