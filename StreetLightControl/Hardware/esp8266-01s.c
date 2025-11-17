@@ -110,7 +110,7 @@ char ESP8266_ConnectMQTT(void)
     my_printf(USART1, "MQTT用户鉴权信息配置成功,准备连接MQTT服务器\r\n");
 
     // 连接到MQTT服务器
-    if((ESP8266_SendCmd("AT+MQTTCONN=0,\""10.201.40.164"\",1883,1\r\n", 50, "OK")))
+    if((ESP8266_SendCmd("AT+MQTTCONN=0,\"10.201.40.164\",1883,1\r\n", 50, "OK")))
     {
         my_printf(USART1, "MQTT服务器连接失败\r\n");
         return 4;
@@ -118,4 +118,31 @@ char ESP8266_ConnectMQTT(void)
     my_printf(USART1, "MQTT服务器连接成功\r\n");
 
     return 0;
+}
+
+void NQTT_Subscribe(char* topic, uint8_t qos)
+{
+    char cmd[200];
+    my_printf(USART1, "准备订阅Topic: %s\r\n", topic);
+    sprintf(cmd, "AT+MQTTSUB=0,\"%s\",%d\r\n", topic, qos);
+
+    if((ESP8266_SendCmd(cmd, 25, "OK")))
+    {
+        my_printf(USART1, "MQTT订阅失败\r\n");
+    }
+    my_printf(USART1, "MQTT订阅成功\r\n");
+}
+
+void NQTT_Publish(char* topic, char* payload, uint8_t qos)
+{
+    char cmd[200];
+    sprintf(cmd, "AT+MQTTPUB=0,\"%s\",\"%s\",%d,0\r\n", topic, payload, qos);
+    my_printf(USART1, "准备发布Topic: %s\r\n", topic);
+    my_printf(USART1, "Topic内容: %s\r\n", payload);
+
+    if((ESP8266_SendCmd(cmd, 25, "OK")))
+    {
+        my_printf(USART1, "MQTT发布失败\r\n");
+    }
+    my_printf(USART1, "MQTT发布成功\r\n");
 }

@@ -23,12 +23,17 @@
 *********************************************************************************/
 int main(void)
 {
-	// PWM_Init();
+    // PWM_Init();
 	Delay_ms(1000);
 
-	// ESP8266_Init();
+	ESP8266_Init();
 	
-	// while(ESP8266_ConnectMQTT())
+	while(ESP8266_ConnectMQTT())
+
+    Delay_ms(500);
+
+    NQTT_Subscribe("lamp/control/+", 1);
+    NQTT_Publish("lamp/control/lamp_001", "{\"cmd\":\"ON\"}", 1);
 
 	while(1)
 	{

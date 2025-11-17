@@ -26,6 +26,7 @@ void ESP8266_Init(void);
 void ESP8266_RST_Init(void);
 unsigned char ESP8266_SendCmd(char* cmd, int wait, char* ack);
 char ESP8266_ConnectMQTT(void);
-
+void NQTT_Subscribe(char* topic, uint8_t qos);
+void NQTT_Publish(char* topic, char* payload, uint8_t qos);
 
 #endif
