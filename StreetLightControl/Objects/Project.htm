@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Objects\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Mon Nov 17 14:37:45 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Tue Nov 18 16:33:01 2025
 <BR><P>
 <H3>Maximum Stack Usage =        392 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-__rt_entry_main &rArr; main &rArr; NQTT_Publish &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
+__rt_entry_main &rArr; main &rArr; MQTT_Publish &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
 <P>
 <H3>
 Functions with no stack information
@@ -363,7 +363,7 @@ Global Symbols
 
 <P><STRONG><a name="[6e]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; NQTT_Publish &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; MQTT_Publish &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -536,8 +536,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NQTT_Subscribe
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NQTT_Publish
+<BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQTT_Subscribe
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQTT_Publish
 </UL>
 
 <P><STRONG><a name="[78]"></a>_printf_str</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, _printf_str.o(.text))
@@ -580,6 +580,8 @@ Global Symbols
 <P><STRONG><a name="[a9]"></a>__aeabi_memclr</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memclr.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_SendCmd
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_printf
+<LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[81]"></a>__rt_memclr</STRONG> (Thumb, 68 bytes, Stack size 0 bytes, rt_memclr.o(.text), UNUSED)
@@ -1024,7 +1026,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_ConnectMQTT
 </UL>
 
-<P><STRONG><a name="[a2]"></a>ESP8266_SendCmd</STRONG> (Thumb, 96 bytes, Stack size 16 bytes, esp8266-01s.o(i.ESP8266_SendCmd))
+<P><STRONG><a name="[a2]"></a>ESP8266_SendCmd</STRONG> (Thumb, 106 bytes, Stack size 16 bytes, esp8266-01s.o(i.ESP8266_SendCmd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
 <LI>Call Chain = ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -1033,8 +1035,8 @@ Global Symbols
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_printf
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NQTT_Subscribe
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NQTT_Publish
+<BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQTT_Subscribe
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQTT_Publish
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_ConnectMQTT
 </UL>
 
@@ -1057,34 +1059,34 @@ Global Symbols
 <P><STRONG><a name="[6]"></a>HardFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_it.o(i.HardFault_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_md.o(RESET)
 </UL>
+<P><STRONG><a name="[ab]"></a>MQTT_Publish</STRONG> (Thumb, 80 bytes, Stack size 224 bytes, esp8266-01s.o(i.MQTT_Publish))
+<BR><BR>[Stack]<UL><LI>Max Depth = 392 + Unknown Stack Size
+<LI>Call Chain = MQTT_Publish &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
+</UL>
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_SendCmd
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_printf
+</UL>
+<BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[ac]"></a>MQTT_Subscribe</STRONG> (Thumb, 66 bytes, Stack size 216 bytes, esp8266-01s.o(i.MQTT_Subscribe))
+<BR><BR>[Stack]<UL><LI>Max Depth = 384 + Unknown Stack Size
+<LI>Call Chain = MQTT_Subscribe &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
+</UL>
+<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_SendCmd
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_printf
+</UL>
+<BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
 <P><STRONG><a name="[7]"></a>MemManage_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f10x_it.o(i.MemManage_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_md.o(RESET)
 </UL>
 <P><STRONG><a name="[5]"></a>NMI_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.NMI_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_md.o(RESET)
 </UL>
-<P><STRONG><a name="[ab]"></a>NQTT_Publish</STRONG> (Thumb, 76 bytes, Stack size 224 bytes, esp8266-01s.o(i.NQTT_Publish))
-<BR><BR>[Stack]<UL><LI>Max Depth = 392 + Unknown Stack Size
-<LI>Call Chain = NQTT_Publish &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
-</UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_SendCmd
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_printf
-</UL>
-<BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[ac]"></a>NQTT_Subscribe</STRONG> (Thumb, 62 bytes, Stack size 216 bytes, esp8266-01s.o(i.NQTT_Subscribe))
-<BR><BR>[Stack]<UL><LI>Max Depth = 384 + Unknown Stack Size
-<LI>Call Chain = NQTT_Subscribe &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
-</UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_SendCmd
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_printf
-</UL>
-<BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
 <P><STRONG><a name="[ba]"></a>NVIC_Init</STRONG> (Thumb, 100 bytes, Stack size 16 bytes, misc.o(i.NVIC_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NVIC_Init
 </UL>
@@ -1154,12 +1156,13 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_md.o(.text)
 </UL>
-<P><STRONG><a name="[33]"></a>USART1_IRQHandler</STRONG> (Thumb, 84 bytes, Stack size 8 bytes, serial.o(i.USART1_IRQHandler))
+<P><STRONG><a name="[33]"></a>USART1_IRQHandler</STRONG> (Thumb, 112 bytes, Stack size 8 bytes, serial.o(i.USART1_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART1_IRQHandler &rArr; USART_GetITStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
+<BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ClearITPendingBit
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ClearITPendingBit
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_md.o(RESET)
 </UL>
@@ -1178,11 +1181,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_Init
 </UL>
 
-<P><STRONG><a name="[34]"></a>USART2_IRQHandler</STRONG> (Thumb, 84 bytes, Stack size 8 bytes, serial.o(i.USART2_IRQHandler))
+<P><STRONG><a name="[34]"></a>USART2_IRQHandler</STRONG> (Thumb, 112 bytes, Stack size 8 bytes, serial.o(i.USART2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = USART2_IRQHandler &rArr; USART_GetITStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ClearITPendingBit
+<BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ClearITPendingBit
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_md.o(RESET)
 </UL>
@@ -1206,7 +1211,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_Init
 </UL>
 
-<P><STRONG><a name="[b5]"></a>USART_ClearITPendingBit</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, stm32f10x_usart.o(i.USART_ClearITPendingBit))
+<P><STRONG><a name="[b4]"></a>USART_ClearITPendingBit</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, stm32f10x_usart.o(i.USART_ClearITPendingBit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_ClearITPendingBit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
@@ -1254,8 +1259,9 @@ Global Symbols
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_Init
 </UL>
 
-<P><STRONG><a name="[b4]"></a>USART_ReceiveData</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_ReceiveData))
-<BR><BR>[Called By]<UL><LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<P><STRONG><a name="[b5]"></a>USART_ReceiveData</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_ReceiveData))
+<BR><BR>[Called By]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[ae]"></a>USART_SendData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f10x_usart.o(i.USART_SendData))
@@ -1274,14 +1280,15 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__printf
 </UL>
 
-<P><STRONG><a name="[6f]"></a>main</STRONG> (Thumb, 52 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[6f]"></a>main</STRONG> (Thumb, 68 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392 + Unknown Stack Size
-<LI>Call Chain = main &rArr; NQTT_Publish &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
+<LI>Call Chain = main &rArr; MQTT_Publish &rArr; ESP8266_SendCmd &rArr; my_printf &rArr; vsprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NQTT_Subscribe
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NQTT_Publish
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQTT_Subscribe
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQTT_Publish
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_Init
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_ConnectMQTT
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_printf
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Delay_ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
@@ -1295,8 +1302,9 @@ Global Symbols
 <LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vsprintf
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Serial_SendString
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NQTT_Subscribe
-<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NQTT_Publish
+<BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQTT_Subscribe
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQTT_Publish
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_SendCmd
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_ConnectMQTT
 </UL>

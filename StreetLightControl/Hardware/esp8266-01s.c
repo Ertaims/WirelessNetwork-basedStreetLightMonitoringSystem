@@ -51,7 +51,7 @@ unsigned char ESP8266_SendCmd(char* cmd, int wait, char* ack)
             break;
         }
         Delay_ms(500);
-        //my_printf(USART1, "ESP8266 ACK: %s\r\n", ESP_Receive_Buff);
+        my_printf(USART1, "ESP8266 ACK: %s\r\n", ESP_Receive_Buff);
     }
     my_printf(USART1, "\r\n");//打印一个换行
     if(wait <= 0) return 1; //失败
@@ -120,29 +120,46 @@ char ESP8266_ConnectMQTT(void)
     return 0;
 }
 
-void NQTT_Subscribe(char* topic, uint8_t qos)
+/**
+ * @brief  订阅Topic
+ * @param  topic: 要订阅的Topic
+ * @param  qos: QoS等级
+ * @retval 无
+ */
+void MQTT_Subscribe(char* topic, uint8_t qos)
 {
     char cmd[200];
     my_printf(USART1, "准备订阅Topic: %s\r\n", topic);
     sprintf(cmd, "AT+MQTTSUB=0,\"%s\",%d\r\n", topic, qos);
 
-    if((ESP8266_SendCmd(cmd, 25, "OK")))
+    if((ESP8266_SendCmd(cmd, 30, "OK")))
     {
         my_printf(USART1, "MQTT订阅失败\r\n");
+        return ;
     }
     my_printf(USART1, "MQTT订阅成功\r\n");
 }
 
-void NQTT_Publish(char* topic, char* payload, uint8_t qos)
+/**
+ * @brief  发布Topic
+ * @param  topic: 要发布的Topic
+ * @param  payload: 发布内容
+ * @param  qos: QoS等级
+ * @retval 无
+ */
+void MQTT_Publish(char* topic, char* payload, uint8_t qos)
 {
     char cmd[200];
     sprintf(cmd, "AT+MQTTPUB=0,\"%s\",\"%s\",%d,0\r\n", topic, payload, qos);
     my_printf(USART1, "准备发布Topic: %s\r\n", topic);
     my_printf(USART1, "Topic内容: %s\r\n", payload);
 
-    if((ESP8266_SendCmd(cmd, 25, "OK")))
+    if((ESP8266_SendCmd(cmd, 30, "OK")))
     {
         my_printf(USART1, "MQTT发布失败\r\n");
+        return ;
     }
     my_printf(USART1, "MQTT发布成功\r\n");
 }
+
+
