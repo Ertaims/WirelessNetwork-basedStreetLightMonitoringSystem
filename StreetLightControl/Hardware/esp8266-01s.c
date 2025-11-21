@@ -51,7 +51,7 @@ unsigned char ESP8266_SendCmd(char* cmd, int wait, char* ack)
             break;
         }
         Delay_ms(500);
-        my_printf(USART1, "ESP8266 ACK: %s\r\n", ESP_Receive_Buff);
+        //my_printf(USART1, "ESP8266 ACK: %s\r\n", ESP_Receive_Buff);
     }
     my_printf(USART1, "\r\n");//打印一个换行
     if(wait <= 0) return 1; //失败
@@ -162,4 +162,74 @@ void MQTT_Publish(char* topic, char* payload, uint8_t qos)
     my_printf(USART1, "MQTT发布成功\r\n");
 }
 
+// 全局变量用于存储接收到的消息
+char mqtt_topic_buffer[128];
+char mqtt_payload_buffer[1024];
+char full_json[1024];
 
+// MQTT消息回调函数指针
+void (*MQTT_MessageCallback)(char* topic, char* payload) = NULL;
+
+/**
+ * @brief 处理接收到的MQTT消息
+ * @param 无
+ * @retval 无
+ */
+void ESP8266_ProcessReceivedMessage(void)
+{
+    char* response_str = (char*)usart2_rx_buffer;
+    my_printf(USART1, "接收到MQTT消息:\r\n%s\r\n", response_str);
+    // 查找MQTT接收消息的标识 "+MQTTSUBRECV"
+    if (strstr(response_str, "+MQTTSUBRECV:") != NULL)
+    {
+        // 解析消息格式: +MQTTSUBRECV:0,"topic",payload_length,payload
+        int payload_length;
+
+        // 提取参数
+        if(sscanf(response_str, "+MQTTSUBRECV:%*d,\"%[^\"]\",%d,{%299[^}]", mqtt_topic_buffer, &payload_length, mqtt_payload_buffer) == 3)
+        {
+            // 创建完整的JSON字符串
+            snprintf(full_json, sizeof(full_json), "{%s}", mqtt_payload_buffer); 
+
+            my_printf(USART1, "接收到MQTT消息:\r\n");
+            my_printf(USART1, "Topic: %s\r\n", mqtt_topic_buffer);
+            my_printf(USART1, "Payload: %s\r\n", full_json);
+
+            // 调用回调函数处理消息
+            if (MQTT_MessageCallback != NULL)
+            {
+                MQTT_MessageCallback(mqtt_topic_buffer, full_json);
+            }
+        }
+    }
+}
+
+/**
+ * @brief 设置MQTT消息接收回调函数
+ * @param callback: 回调函数指针
+ * @retval 无
+ */
+void ESP8266_SetMessageCallback(void (*callback)(char* topic, char* payload)) {
+    MQTT_MessageCallback = callback;
+}
+
+/**
+ * @brief 根据话题解析命令
+ * @param payload: 控制命令
+ * @retval 无
+ */
+void handle_mqtt_message(char* topic, char* payload)
+{
+    if (strstr(topic, "lamp/control/") != NULL)
+    {
+        parse_control_command(payload);
+    }
+    else if (strstr(topic, "lamp/status/") != NULL)
+    {
+        parse_status_command(payload);
+    }
+    else
+    {
+        my_printf(USART1, "未知的Topic: %s\r\n", topic);
+    }
+}

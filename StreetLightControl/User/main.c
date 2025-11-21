@@ -1,7 +1,3 @@
-#include "stm32f10x.h"  // Device header
-#include "Delay.h"
-#include "OLED.h"
-//#include "PWM.h"
 #include "esp8266-01s.h"
 
 
@@ -36,18 +32,19 @@ int main(void)
 
     Delay_ms(500);
 
+    // 设置消息回调函数
+    ESP8266_SetMessageCallback(handle_mqtt_message);
+
     MQTT_Subscribe("lamp/control/+", 1);
 
-    MQTT_Publish("lamp/control/lamp_001", "{\\\"cmd\\\":\\\"ON\\\"}", 1);
-    //MQTT_Subscribe("esp8266/01s", 1);
-
-    // for(int i = 0; i < 5; i++)
-    // {
-    //     MQTT_Publish("esp8266/01s", "{\"temperature\":25,\"humidity\":60}", 1);
-    //     Delay_ms(2000);
-    // }
-
+    MQTT_Publish("lamp/control/lamp_001", "{\\\"command\\\":\\\"switch\\\"\\,\\\"value\\\":\\\"on\\\"\\,\\\"group\\\":\\\"A\\\"\\,\\\"lamp_id\\\":\\\"lamp_001\\\"\\,\\\"timestamp\\\":\\\"2017-01-01T00:00:00.000Z\\\"}", 1);
+    
 	while(1)
 	{
+        // 持续检查是否有新消息
+        my_printf(USART1, "Waiting for new message...\r\n");
+        ESP8266_ProcessReceivedMessage();
+
+        Delay_ms(1000);
 	}
 }

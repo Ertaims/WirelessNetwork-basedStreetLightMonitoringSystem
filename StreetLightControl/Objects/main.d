@@ -1,4 +1,7 @@
 .\objects\main.o: User\main.c
+.\objects\main.o: .\Hardware\esp8266-01s.h
+.\objects\main.o: .\Hardware\Serial.h
+.\objects\main.o: D:\qianrushi\MDK\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: .\Start\stm32f10x.h
 .\objects\main.o: .\Start\core_cm3.h
 .\objects\main.o: D:\qianrushi\MDK\ARM\ARMCC\Bin\..\include\stdint.h
@@ -29,8 +32,7 @@
 .\objects\main.o: .\Library\stm32f10x_wwdg.h
 .\objects\main.o: .\Library\misc.h
 .\objects\main.o: .\System\Delay.h
-.\objects\main.o: .\Hardware\OLED.h
-.\objects\main.o: .\Hardware\esp8266-01s.h
-.\objects\main.o: .\Hardware\Serial.h
-.\objects\main.o: D:\qianrushi\MDK\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main.o: .\Json\Json_parser.h
+.\objects\main.o: .\Library\cJSON.h
+.\objects\main.o: D:\qianrushi\MDK\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\main.o: D:\qianrushi\MDK\ARM\ARMCC\Bin\..\include\string.h

@@ -2,7 +2,8 @@
 #define __ESP8266_01S_H__ 
 
 #include "Serial.h"
-#include "delay.h"
+#include "Delay.h"
+#include "Json_parser.h"
 #include <string.h>
 
 #define ESP_Receive_Buff 	usart2_rx_buffer  
@@ -22,8 +23,10 @@
 
 #define RESET_IO(x)    GPIO_WriteBit(GPIOA, GPIO_Pin_4, (BitAction)x)  //PA4¿ØÖÆWiFiµÄ¸´Î»
 
-// char mqtt_topic_buffer[];
-// char mqtt_payload_buffer[];
+extern char mqtt_topic_buffer[];
+extern char mqtt_payload_buffer[];
+
+extern void (*MQTT_MessageCallback)(char* topic, char* payload);
 
 void ESP8266_Init(void);
 void ESP8266_RST_Init(void);
@@ -31,5 +34,8 @@ unsigned char ESP8266_SendCmd(char* cmd, int wait, char* ack);
 char ESP8266_ConnectMQTT(void);
 void MQTT_Subscribe(char* topic, uint8_t qos);
 void MQTT_Publish(char* topic, char* payload, uint8_t qos);
+void ESP8266_ProcessReceivedMessage(void);
+void ESP8266_SetMessageCallback(void (*callback)(char* topic, char* payload));
+void handle_mqtt_message(char* topic, char* payload);
 
 #endif

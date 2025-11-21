@@ -2,6 +2,7 @@
 #define __SERIAL_H__ 
 
 #include <stdio.h>
+#include "stm32f10x.h"  // Device header
 
 #define RX_BUFFER_SIZE 1024
 #define USART_BUFF_SIZE 1024
