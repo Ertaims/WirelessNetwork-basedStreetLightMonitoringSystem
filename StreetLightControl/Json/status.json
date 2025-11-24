@@ -1,5 +1,6 @@
 {
-  "id": "NODE_001",
+  "group": "A",
+  "lamp_id": "lamp_001",
   "online": true,
   "status": {
     "switch": "on",

@@ -41,10 +41,11 @@ int main(void)
     
 	while(1)
 	{
-        // 持续检查是否有新消息
-        my_printf(USART1, "Waiting for new message...\r\n");
-        ESP8266_ProcessReceivedMessage();
-
+        if(usart2_rx_flag)
+        {
+            ESP8266_ProcessReceivedMessage();
+            usart2_rx_flag = 0;
+        }
         Delay_ms(1000);
 	}
 }

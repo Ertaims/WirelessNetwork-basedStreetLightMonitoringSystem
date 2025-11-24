@@ -518,6 +518,7 @@ Section Cross References
     main.o(i.main) refers to esp8266-01s.o(i.ESP8266_ProcessReceivedMessage) for ESP8266_ProcessReceivedMessage
     main.o(i.main) refers to esp8266-01s.o(i.handle_mqtt_message) for handle_mqtt_message
     main.o(i.main) refers to main.o(.conststring) for .conststring
+    main.o(i.main) refers to serial.o(.data) for usart2_rx_flag
     json_parser.o(i.parse_control_command) refers to cjson.o(i.cJSON_Parse) for cJSON_Parse
     json_parser.o(i.parse_control_command) refers to cjson.o(i.cJSON_GetErrorPtr) for cJSON_GetErrorPtr
     json_parser.o(i.parse_control_command) refers to serial.o(i.my_printf) for my_printf
@@ -529,6 +530,16 @@ Section Cross References
     json_parser.o(i.parse_dim_command) refers to strcmpv7m.o(.text) for strcmp
     json_parser.o(i.parse_dim_command) refers to cjson.o(i.cJSON_IsNumber) for cJSON_IsNumber
     json_parser.o(i.parse_dim_command) refers to serial.o(i.my_printf) for my_printf
+    json_parser.o(i.parse_status_command) refers to cjson.o(i.cJSON_Parse) for cJSON_Parse
+    json_parser.o(i.parse_status_command) refers to cjson.o(i.cJSON_GetErrorPtr) for cJSON_GetErrorPtr
+    json_parser.o(i.parse_status_command) refers to serial.o(i.my_printf) for my_printf
+    json_parser.o(i.parse_status_command) refers to cjson.o(i.cJSON_GetObjectItemCaseSensitive) for cJSON_GetObjectItemCaseSensitive
+    json_parser.o(i.parse_status_command) refers to cjson.o(i.cJSON_IsString) for cJSON_IsString
+    json_parser.o(i.parse_status_command) refers to cjson.o(i.cJSON_IsBool) for cJSON_IsBool
+    json_parser.o(i.parse_status_command) refers to cjson.o(i.cJSON_IsObject) for cJSON_IsObject
+    json_parser.o(i.parse_status_command) refers to cjson.o(i.cJSON_Delete) for cJSON_Delete
+    json_parser.o(i.parse_status_command) refers to cjson.o(i.cJSON_IsNumber) for cJSON_IsNumber
+    json_parser.o(i.parse_status_command) refers to cjson.o(i.cJSON_IsTrue) for cJSON_IsTrue
     json_parser.o(i.parse_switch_command) refers to cjson.o(i.cJSON_GetObjectItemCaseSensitive) for cJSON_GetObjectItemCaseSensitive
     json_parser.o(i.parse_switch_command) refers to cjson.o(i.cJSON_IsString) for cJSON_IsString
     json_parser.o(i.parse_switch_command) refers to strcmpv7m.o(.text) for strcmp
@@ -1589,13 +1600,10 @@ Removing Unused input sections from the image.
     Removing cjson.o(i.cJSON_InitHooks), (100 bytes).
     Removing cjson.o(i.cJSON_InsertItemInArray), (86 bytes).
     Removing cjson.o(i.cJSON_IsArray), (22 bytes).
-    Removing cjson.o(i.cJSON_IsBool), (24 bytes).
     Removing cjson.o(i.cJSON_IsFalse), (20 bytes).
     Removing cjson.o(i.cJSON_IsInvalid), (20 bytes).
     Removing cjson.o(i.cJSON_IsNull), (22 bytes).
-    Removing cjson.o(i.cJSON_IsObject), (22 bytes).
     Removing cjson.o(i.cJSON_IsRaw), (22 bytes).
-    Removing cjson.o(i.cJSON_IsTrue), (22 bytes).
     Removing cjson.o(i.cJSON_Minify), (154 bytes).
     Removing cjson.o(i.cJSON_ParseWithLength), (20 bytes).
     Removing cjson.o(i.cJSON_Print), (20 bytes).
@@ -1666,7 +1674,7 @@ Removing Unused input sections from the image.
     Removing lightsensor.o(i.LightSensor_Get), (20 bytes).
     Removing lightsensor.o(i.LightSensor_Init), (44 bytes).
 
-582 unused section(s) (total 27685 bytes) removed from the image.
+579 unused section(s) (total 27617 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1676,184 +1684,184 @@ Image Symbol Table
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
-    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit1.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit3.o ABSOLUTE
-    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardshut.o ABSOLUTE
     ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit2.o ABSOLUTE
+    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardinit1.o ABSOLUTE
+    ../clib/angel/boardlib.s                 0x00000000   Number         0  boardshut.o ABSOLUTE
     ../clib/angel/handlers.s                 0x00000000   Number         0  __scatter_copy.o ABSOLUTE
     ../clib/angel/handlers.s                 0x00000000   Number         0  __scatter_zi.o ABSOLUTE
-    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry2.o ABSOLUTE
+    ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit.o ABSOLUTE
+    ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  __rtentry4.o ABSOLUTE
     ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit2.o ABSOLUTE
-    ../clib/angel/kernel.s                   0x00000000   Number         0  rtexit.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_errno_addr_intlibspace.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_locale_intlibspace.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_heap_descriptor_intlibspace.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_heap_descriptor.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_ctype_table.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_errno_addr_intlibspace.o ABSOLUTE
+    ../clib/angel/rt.s                       0x00000000   Number         0  rt_locale.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_errno_addr.o ABSOLUTE
     ../clib/angel/rt.s                       0x00000000   Number         0  rt_raise.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_locale_intlibspace.o ABSOLUTE
-    ../clib/angel/rt.s                       0x00000000   Number         0  rt_locale.o ABSOLUTE
     ../clib/angel/scatter.s                  0x00000000   Number         0  __scatter.o ABSOLUTE
     ../clib/angel/startup.s                  0x00000000   Number         0  __main.o ABSOLUTE
-    ../clib/angel/sys.s                      0x00000000   Number         0  mutex_dummy.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  libspace.o ABSOLUTE
-    ../clib/angel/sys.s                      0x00000000   Number         0  sys_stackheap_outer.o ABSOLUTE
-    ../clib/angel/sys.s                      0x00000000   Number         0  indicate_semi.o ABSOLUTE
     ../clib/angel/sys.s                      0x00000000   Number         0  use_no_semi.o ABSOLUTE
+    ../clib/angel/sys.s                      0x00000000   Number         0  mutex_dummy.o ABSOLUTE
+    ../clib/angel/sys.s                      0x00000000   Number         0  indicate_semi.o ABSOLUTE
+    ../clib/angel/sys.s                      0x00000000   Number         0  sys_stackheap_outer.o ABSOLUTE
+    ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_exit.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_command.o ABSOLUTE
     ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_wrch.o ABSOLUTE
-    ../clib/angel/sysapp.c                   0x00000000   Number         0  sys_exit.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  _get_argv.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  argv_veneer.o ABSOLUTE
-    ../clib/armsys.c                         0x00000000   Number         0  _get_argv_nomalloc.o ABSOLUTE
     ../clib/armsys.c                         0x00000000   Number         0  no_argv.o ABSOLUTE
+    ../clib/armsys.c                         0x00000000   Number         0  _get_argv_nomalloc.o ABSOLUTE
     ../clib/bigflt.c                         0x00000000   Number         0  bigflt0.o ABSOLUTE
     ../clib/btod.s                           0x00000000   Number         0  btod.o ABSOLUTE
     ../clib/ctype.c                          0x00000000   Number         0  isspace.o ABSOLUTE
     ../clib/ctype.c                          0x00000000   Number         0  tolower.o ABSOLUTE
     ../clib/fenv.c                           0x00000000   Number         0  _rserrno.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_extend.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_final_mt.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_init.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_final.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_realloc.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_alloc_mt.o ABSOLUTE
     ../clib/heap1.c                          0x00000000   Number         0  h1_extend_mt.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_alloc_mt.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_final.o ABSOLUTE
     ../clib/heap1.c                          0x00000000   Number         0  h1_free_mt.o ABSOLUTE
-    ../clib/heap1.c                          0x00000000   Number         0  h1_init_mt.o ABSOLUTE
     ../clib/heap1.c                          0x00000000   Number         0  h1_free.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_extend.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_realloc.o ABSOLUTE
     ../clib/heap1.c                          0x00000000   Number         0  h1_alloc.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_final_mt.o ABSOLUTE
     ../clib/heap1.c                          0x00000000   Number         0  h1_realloc_mt.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_init.o ABSOLUTE
+    ../clib/heap1.c                          0x00000000   Number         0  h1_init_mt.o ABSOLUTE
     ../clib/heap2.c                          0x00000000   Number         0  fdtree.o ABSOLUTE
     ../clib/heap2.c                          0x00000000   Number         0  heap2.o ABSOLUTE
     ../clib/heap2.c                          0x00000000   Number         0  heap2mt.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  malloc.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  realloc.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  term_alloc.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  hrguard.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  free.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  heapstubs.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  hguard.o ABSOLUTE
     ../clib/heapalloc.c                      0x00000000   Number         0  init_alloc.o ABSOLUTE
-    ../clib/heapalloc.c                      0x00000000   Number         0  term_alloc.o ABSOLUTE
-    ../clib/heapaux.c                        0x00000000   Number         0  heapauxi.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  heapstubs.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  realloc.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  free.o ABSOLUTE
+    ../clib/heapalloc.c                      0x00000000   Number         0  malloc.o ABSOLUTE
     ../clib/heapaux.c                        0x00000000   Number         0  heapauxa.o ABSOLUTE
+    ../clib/heapaux.c                        0x00000000   Number         0  heapauxi.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libshutdown.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libshutdown2.o ABSOLUTE
-    ../clib/libinit.s                        0x00000000   Number         0  libinit2.o ABSOLUTE
     ../clib/libinit.s                        0x00000000   Number         0  libinit.o ABSOLUTE
+    ../clib/libinit.s                        0x00000000   Number         0  libinit2.o ABSOLUTE
     ../clib/locale.c                         0x00000000   Number         0  _wcrtomb.o ABSOLUTE
     ../clib/locale.s                         0x00000000   Number         0  lc_ctype_c.o ABSOLUTE
     ../clib/locale.s                         0x00000000   Number         0  lc_numeric_c.o ABSOLUTE
-    ../clib/longlong.s                       0x00000000   Number         0  llshl.o ABSOLUTE
     ../clib/longlong.s                       0x00000000   Number         0  lludiv10.o ABSOLUTE
-    ../clib/memcpset.s                       0x00000000   Number         0  strcmpv7m.o ABSOLUTE
-    ../clib/memcpset.s                       0x00000000   Number         0  rt_memclr_w.o ABSOLUTE
+    ../clib/longlong.s                       0x00000000   Number         0  llshl.o ABSOLUTE
+    ../clib/memcpset.s                       0x00000000   Number         0  rt_memcpy_v6.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  rt_memcpy_w.o ABSOLUTE
     ../clib/memcpset.s                       0x00000000   Number         0  rt_memclr.o ABSOLUTE
-    ../clib/memcpset.s                       0x00000000   Number         0  rt_memcpy_v6.o ABSOLUTE
+    ../clib/memcpset.s                       0x00000000   Number         0  rt_memclr_w.o ABSOLUTE
+    ../clib/memcpset.s                       0x00000000   Number         0  strcmpv7m.o ABSOLUTE
     ../clib/misc.s                           0x00000000   Number         0  printf_stubs.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_flags.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_ss.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_ss.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_wp.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_oct_int_ll.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_wchar.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_nopercent.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_fp_infnan.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_fp_hex.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_hex_int_ptr.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _sputc.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_char_common.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_fp_dec.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_charcount.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_intcommon.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_truncate.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_char.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_wctomb.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_longlong_dec.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_wp.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _snputc.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_hex_ll_ptr.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_hex_int_ll_ptr.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_oct_ll.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_hex_ptr.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  _printf_oct_int.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_ss_wp.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf_ss_wp.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  vsprintf.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __2sprintf.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __2snprintf.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  noretval__2sprintf.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  noretval__2snprintf.o ABSOLUTE
-    ../clib/printf.c                         0x00000000   Number         0  __printf.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  _printf_pad.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  _printf_str.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  _printf_dec.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  _printf_hex_ll.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  _printf_hex_int.o ABSOLUTE
     ../clib/printf.c                         0x00000000   Number         0  _printf_hex_int_ll.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_g.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_lld.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_fp_hex.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_hex_ptr.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_hex_int_ptr.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_fp_dec.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_hex_ll_ptr.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __2sprintf.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_wctomb.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_char_common.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_fp_infnan.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_nopercent.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_char.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_hex_int_ll_ptr.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_flags.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_ss.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_ss.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_wchar.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_wp.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_wp.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _snputc.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_oct_ll.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_charcount.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_oct_int.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __2snprintf.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _sputc.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_intcommon.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_ss_wp.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_longlong_dec.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  vsprintf.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_oct_int_ll.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  _printf_truncate.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  noretval__2sprintf.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  noretval__2snprintf.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf_flags_ss_wp.o ABSOLUTE
+    ../clib/printf.c                         0x00000000   Number         0  __printf.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_c.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_lli.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_percent.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_percent_end.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_llo.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_l.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_llx.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_a.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_f.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_llu.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_e.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_ll.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_s.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_x.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_u.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_i.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_d.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_g.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_percent.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_f.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_llu.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_lld.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_lli.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_percent_end.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_a.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_llx.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_e.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_llo.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_u.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_ls.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_o.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_lc.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_d.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_p.o ABSOLUTE
-    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_ls.o ABSOLUTE
+    ../clib/printf_percent.s                 0x00000000   Number         0  _printf_l.o ABSOLUTE
     ../clib/printf_percent.s                 0x00000000   Number         0  _printf_n.o ABSOLUTE
-    ../clib/scanf.c                          0x00000000   Number         0  scanf_char.o ABSOLUTE
-    ../clib/scanf.c                          0x00000000   Number         0  strtod.o ABSOLUTE
+    ../clib/scanf.c                          0x00000000   Number         0  scanf_fp.o ABSOLUTE
+    ../clib/scanf.c                          0x00000000   Number         0  _scanf.o ABSOLUTE
     ../clib/scanf.c                          0x00000000   Number         0  scanf_infnan.o ABSOLUTE
     ../clib/scanf.c                          0x00000000   Number         0  __0sscanf.o ABSOLUTE
-    ../clib/scanf.c                          0x00000000   Number         0  scanf_fp.o ABSOLUTE
-    ../clib/scanf.c                          0x00000000   Number         0  _chval.o ABSOLUTE
+    ../clib/scanf.c                          0x00000000   Number         0  strtod.o ABSOLUTE
     ../clib/scanf.c                          0x00000000   Number         0  _scanf_str.o ABSOLUTE
-    ../clib/scanf.c                          0x00000000   Number         0  _sgetc.o ABSOLUTE
-    ../clib/scanf.c                          0x00000000   Number         0  _scanf.o ABSOLUTE
+    ../clib/scanf.c                          0x00000000   Number         0  scanf_char.o ABSOLUTE
+    ../clib/scanf.c                          0x00000000   Number         0  _chval.o ABSOLUTE
     ../clib/scanf.c                          0x00000000   Number         0  _scanf_int.o ABSOLUTE
     ../clib/scanf.c                          0x00000000   Number         0  scanf_hexfp.o ABSOLUTE
+    ../clib/scanf.c                          0x00000000   Number         0  _sgetc.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  __raise.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_general.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_fpe_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_outer.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_formal.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_other.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_exit.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_cppl_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_general.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  __raise.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
-    ../clib/signal.c                         0x00000000   Number         0  defsig_fpe_inner.o ABSOLUTE
     ../clib/signal.c                         0x00000000   Number         0  defsig_abrt_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_rtmem_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_cppl_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_other.o ABSOLUTE
+    ../clib/signal.c                         0x00000000   Number         0  defsig_exit.o ABSOLUTE
     ../clib/signal.s                         0x00000000   Number         0  defsig.o ABSOLUTE
     ../clib/stdlib.c                         0x00000000   Number         0  exit.o ABSOLUTE
-    ../clib/string.c                         0x00000000   Number         0  strcpy.o ABSOLUTE
-    ../clib/string.c                         0x00000000   Number         0  strlen.o ABSOLUTE
     ../clib/string.c                         0x00000000   Number         0  strncmp.o ABSOLUTE
     ../clib/string.c                         0x00000000   Number         0  strstr.o ABSOLUTE
+    ../clib/string.c                         0x00000000   Number         0  strcpy.o ABSOLUTE
+    ../clib/string.c                         0x00000000   Number         0  strlen.o ABSOLUTE
     ../fplib/d2f.s                           0x00000000   Number         0  d2f.o ABSOLUTE
     ../fplib/daddsub.s                       0x00000000   Number         0  daddsub_clz.o ABSOLUTE
     ../fplib/dcheck1.s                       0x00000000   Number         0  dcheck1.o ABSOLUTE
@@ -2075,8 +2083,8 @@ Image Symbol Table
     .text                                    0x080023bc   Section        0  _wcrtomb.o(.text)
     .text                                    0x080023fc   Section        0  defsig_rtmem_outer.o(.text)
     .text                                    0x0800240a   Section        2  use_no_semi.o(.text)
-    .text                                    0x0800240c   Section        0  indicate_semi.o(.text)
     .text                                    0x0800240c   Section       74  sys_stackheap_outer.o(.text)
+    .text                                    0x0800240c   Section        0  indicate_semi.o(.text)
     .text                                    0x08002456   Section        0  _rserrno.o(.text)
     .text                                    0x0800246c   Section        0  scanf_hexfp.o(.text)
     .text                                    0x0800278c   Section        0  scanf_infnan.o(.text)
@@ -2160,90 +2168,93 @@ Image Symbol Table
     i.cJSON_Delete                           0x08004380   Section        0  cjson.o(i.cJSON_Delete)
     i.cJSON_GetErrorPtr                      0x080043e0   Section        0  cjson.o(i.cJSON_GetErrorPtr)
     i.cJSON_GetObjectItemCaseSensitive       0x080043f0   Section        0  cjson.o(i.cJSON_GetObjectItemCaseSensitive)
-    i.cJSON_IsNumber                         0x08004402   Section        0  cjson.o(i.cJSON_IsNumber)
-    i.cJSON_IsString                         0x08004418   Section        0  cjson.o(i.cJSON_IsString)
-    i.cJSON_New_Item                         0x0800442e   Section        0  cjson.o(i.cJSON_New_Item)
-    cJSON_New_Item                           0x0800442f   Thumb Code    26  cjson.o(i.cJSON_New_Item)
-    i.cJSON_Parse                            0x08004448   Section        0  cjson.o(i.cJSON_Parse)
-    i.cJSON_ParseWithLengthOpts              0x08004458   Section        0  cjson.o(i.cJSON_ParseWithLengthOpts)
-    i.cJSON_ParseWithOpts                    0x0800452c   Section        0  cjson.o(i.cJSON_ParseWithOpts)
-    i.case_insensitive_strcmp                0x08004554   Section        0  cjson.o(i.case_insensitive_strcmp)
-    case_insensitive_strcmp                  0x08004555   Thumb Code    72  cjson.o(i.case_insensitive_strcmp)
-    i.frexp                                  0x0800459c   Section        0  frexp.o(i.frexp)
-    i.get_decimal_point                      0x080045f4   Section        0  cjson.o(i.get_decimal_point)
-    get_decimal_point                        0x080045f5   Thumb Code     4  cjson.o(i.get_decimal_point)
-    i.get_object_item                        0x080045f8   Section        0  cjson.o(i.get_object_item)
-    get_object_item                          0x080045f9   Thumb Code    82  cjson.o(i.get_object_item)
-    i.handle_mqtt_message                    0x0800464c   Section        0  esp8266-01s.o(i.handle_mqtt_message)
-    i.ldexp                                  0x080046bc   Section        0  ldexp.o(i.ldexp)
-    i.main                                   0x08004730   Section        0  main.o(i.main)
-    i.my_printf                              0x08004810   Section        0  serial.o(i.my_printf)
-    i.parse_array                            0x08004844   Section        0  cjson.o(i.parse_array)
-    parse_array                              0x08004845   Thumb Code   248  cjson.o(i.parse_array)
-    i.parse_control_command                  0x0800493c   Section        0  json_parser.o(i.parse_control_command)
-    i.parse_dim_command                      0x080049c8   Section        0  json_parser.o(i.parse_dim_command)
-    i.parse_hex4                             0x08004b3c   Section        0  cjson.o(i.parse_hex4)
-    parse_hex4                               0x08004b3d   Thumb Code    90  cjson.o(i.parse_hex4)
-    i.parse_number                           0x08004b98   Section        0  cjson.o(i.parse_number)
-    parse_number                             0x08004b99   Thumb Code   354  cjson.o(i.parse_number)
-    i.parse_object                           0x08004d08   Section        0  cjson.o(i.parse_object)
-    parse_object                             0x08004d09   Thumb Code   332  cjson.o(i.parse_object)
-    i.parse_status_command                   0x08004e54   Section        0  json_parser.o(i.parse_status_command)
-    i.parse_string                           0x08004e5a   Section        0  cjson.o(i.parse_string)
-    parse_string                             0x08004e5b   Thumb Code   398  cjson.o(i.parse_string)
-    i.parse_switch_command                   0x08004fe8   Section        0  json_parser.o(i.parse_switch_command)
-    i.parse_value                            0x08005160   Section        0  cjson.o(i.parse_value)
-    parse_value                              0x08005161   Thumb Code   290  cjson.o(i.parse_value)
-    i.skip_utf8_bom                          0x0800529c   Section        0  cjson.o(i.skip_utf8_bom)
-    skip_utf8_bom                            0x0800529d   Thumb Code    56  cjson.o(i.skip_utf8_bom)
-    i.strtod                                 0x080052d8   Section        0  strtod.o(i.strtod)
-    i.utf16_literal_to_utf8                  0x080052f4   Section        0  cjson.o(i.utf16_literal_to_utf8)
-    utf16_literal_to_utf8                    0x080052f5   Thumb Code   300  cjson.o(i.utf16_literal_to_utf8)
-    locale$$code                             0x08005420   Section       44  lc_ctype_c.o(locale$$code)
-    locale$$code                             0x0800544c   Section       44  lc_numeric_c.o(locale$$code)
-    x$fpl$d2f                                0x08005478   Section       98  d2f.o(x$fpl$d2f)
-    x$fpl$dcheck1                            0x080054dc   Section       16  dcheck1.o(x$fpl$dcheck1)
-    x$fpl$dcmpinf                            0x080054ec   Section       24  dcmpi.o(x$fpl$dcmpinf)
-    x$fpl$deqf                               0x08005504   Section      120  deqf.o(x$fpl$deqf)
-    x$fpl$dfix                               0x0800557c   Section       94  dfix.o(x$fpl$dfix)
-    x$fpl$dleqf                              0x080055dc   Section      120  dleqf.o(x$fpl$dleqf)
-    x$fpl$dnaninf                            0x08005654   Section      156  dnaninf.o(x$fpl$dnaninf)
-    x$fpl$drleqf                             0x080056f0   Section      108  drleqf.o(x$fpl$drleqf)
-    x$fpl$fretinf                            0x0800575c   Section       10  fretinf.o(x$fpl$fretinf)
-    x$fpl$printf1                            0x08005766   Section        4  printf1.o(x$fpl$printf1)
-    x$fpl$printf2                            0x0800576a   Section        4  printf2.o(x$fpl$printf2)
-    x$fpl$retnan                             0x0800576e   Section      100  retnan.o(x$fpl$retnan)
-    x$fpl$scalbn                             0x080057d2   Section       92  scalbn.o(x$fpl$scalbn)
-    x$fpl$scanf1                             0x0800582e   Section        4  scanf1.o(x$fpl$scanf1)
-    x$fpl$scanf2                             0x08005832   Section        8  scanf2.o(x$fpl$scanf2)
-    x$fpl$trapveneer                         0x0800583a   Section       48  trapv.o(x$fpl$trapveneer)
-    .constdata                               0x0800586a   Section       40  _printf_hex_int_ll_ptr.o(.constdata)
-    x$fpl$usenofp                            0x0800586a   Section        0  usenofp.o(x$fpl$usenofp)
-    uc_hextab                                0x0800586a   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
-    lc_hextab                                0x0800587e   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
-    .constdata                               0x08005892   Section       17  __printf_flags_ss_wp.o(.constdata)
-    maptable                                 0x08005892   Data          17  __printf_flags_ss_wp.o(.constdata)
-    .constdata                               0x080058a4   Section        8  _printf_wctomb.o(.constdata)
-    initial_mbstate                          0x080058a4   Data           8  _printf_wctomb.o(.constdata)
-    .constdata                               0x080058ac   Section       38  _printf_fp_hex.o(.constdata)
-    lc_hextab                                0x080058ac   Data          19  _printf_fp_hex.o(.constdata)
-    uc_hextab                                0x080058bf   Data          19  _printf_fp_hex.o(.constdata)
-    .constdata                               0x080058d4   Section      148  bigflt0.o(.constdata)
-    tenpwrs_x                                0x080058d4   Data          60  bigflt0.o(.constdata)
-    tenpwrs_i                                0x08005910   Data          64  bigflt0.o(.constdata)
-    .conststring                             0x08005968   Section      130  main.o(.conststring)
-    c$$dinf                                  0x08005a0c   Section        8  fpconst.o(c$$dinf)
-    locale$$data                             0x08005a14   Section      272  lc_ctype_c.o(locale$$data)
-    __lcctype_c_name                         0x08005a18   Data           2  lc_ctype_c.o(locale$$data)
-    __lcctype_c_start                        0x08005a20   Data           0  lc_ctype_c.o(locale$$data)
-    locale$$data                             0x08005b24   Section       28  lc_numeric_c.o(locale$$data)
-    __lcctype_c_end                          0x08005b24   Data           0  lc_ctype_c.o(locale$$data)
-    __lcnum_c_name                           0x08005b28   Data           2  lc_numeric_c.o(locale$$data)
-    __lcnum_c_start                          0x08005b30   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_point                          0x08005b3c   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_thousands                      0x08005b3e   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_grouping                       0x08005b3f   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_end                            0x08005b40   Data           0  lc_numeric_c.o(locale$$data)
+    i.cJSON_IsBool                           0x08004402   Section        0  cjson.o(i.cJSON_IsBool)
+    i.cJSON_IsNumber                         0x0800441a   Section        0  cjson.o(i.cJSON_IsNumber)
+    i.cJSON_IsObject                         0x08004430   Section        0  cjson.o(i.cJSON_IsObject)
+    i.cJSON_IsString                         0x08004446   Section        0  cjson.o(i.cJSON_IsString)
+    i.cJSON_IsTrue                           0x0800445c   Section        0  cjson.o(i.cJSON_IsTrue)
+    i.cJSON_New_Item                         0x08004472   Section        0  cjson.o(i.cJSON_New_Item)
+    cJSON_New_Item                           0x08004473   Thumb Code    26  cjson.o(i.cJSON_New_Item)
+    i.cJSON_Parse                            0x0800448c   Section        0  cjson.o(i.cJSON_Parse)
+    i.cJSON_ParseWithLengthOpts              0x0800449c   Section        0  cjson.o(i.cJSON_ParseWithLengthOpts)
+    i.cJSON_ParseWithOpts                    0x08004570   Section        0  cjson.o(i.cJSON_ParseWithOpts)
+    i.case_insensitive_strcmp                0x08004598   Section        0  cjson.o(i.case_insensitive_strcmp)
+    case_insensitive_strcmp                  0x08004599   Thumb Code    72  cjson.o(i.case_insensitive_strcmp)
+    i.frexp                                  0x080045e0   Section        0  frexp.o(i.frexp)
+    i.get_decimal_point                      0x08004638   Section        0  cjson.o(i.get_decimal_point)
+    get_decimal_point                        0x08004639   Thumb Code     4  cjson.o(i.get_decimal_point)
+    i.get_object_item                        0x0800463c   Section        0  cjson.o(i.get_object_item)
+    get_object_item                          0x0800463d   Thumb Code    82  cjson.o(i.get_object_item)
+    i.handle_mqtt_message                    0x08004690   Section        0  esp8266-01s.o(i.handle_mqtt_message)
+    i.ldexp                                  0x08004700   Section        0  ldexp.o(i.ldexp)
+    i.main                                   0x08004774   Section        0  main.o(i.main)
+    i.my_printf                              0x0800483c   Section        0  serial.o(i.my_printf)
+    i.parse_array                            0x08004870   Section        0  cjson.o(i.parse_array)
+    parse_array                              0x08004871   Thumb Code   248  cjson.o(i.parse_array)
+    i.parse_control_command                  0x08004968   Section        0  json_parser.o(i.parse_control_command)
+    i.parse_dim_command                      0x080049f4   Section        0  json_parser.o(i.parse_dim_command)
+    i.parse_hex4                             0x08004b68   Section        0  cjson.o(i.parse_hex4)
+    parse_hex4                               0x08004b69   Thumb Code    90  cjson.o(i.parse_hex4)
+    i.parse_number                           0x08004bc4   Section        0  cjson.o(i.parse_number)
+    parse_number                             0x08004bc5   Thumb Code   354  cjson.o(i.parse_number)
+    i.parse_object                           0x08004d34   Section        0  cjson.o(i.parse_object)
+    parse_object                             0x08004d35   Thumb Code   332  cjson.o(i.parse_object)
+    i.parse_status_command                   0x08004e80   Section        0  json_parser.o(i.parse_status_command)
+    i.parse_string                           0x0800525c   Section        0  cjson.o(i.parse_string)
+    parse_string                             0x0800525d   Thumb Code   398  cjson.o(i.parse_string)
+    i.parse_switch_command                   0x080053ec   Section        0  json_parser.o(i.parse_switch_command)
+    i.parse_value                            0x08005564   Section        0  cjson.o(i.parse_value)
+    parse_value                              0x08005565   Thumb Code   290  cjson.o(i.parse_value)
+    i.skip_utf8_bom                          0x080056a0   Section        0  cjson.o(i.skip_utf8_bom)
+    skip_utf8_bom                            0x080056a1   Thumb Code    56  cjson.o(i.skip_utf8_bom)
+    i.strtod                                 0x080056dc   Section        0  strtod.o(i.strtod)
+    i.utf16_literal_to_utf8                  0x080056f8   Section        0  cjson.o(i.utf16_literal_to_utf8)
+    utf16_literal_to_utf8                    0x080056f9   Thumb Code   300  cjson.o(i.utf16_literal_to_utf8)
+    locale$$code                             0x08005824   Section       44  lc_ctype_c.o(locale$$code)
+    locale$$code                             0x08005850   Section       44  lc_numeric_c.o(locale$$code)
+    x$fpl$d2f                                0x0800587c   Section       98  d2f.o(x$fpl$d2f)
+    x$fpl$dcheck1                            0x080058e0   Section       16  dcheck1.o(x$fpl$dcheck1)
+    x$fpl$dcmpinf                            0x080058f0   Section       24  dcmpi.o(x$fpl$dcmpinf)
+    x$fpl$deqf                               0x08005908   Section      120  deqf.o(x$fpl$deqf)
+    x$fpl$dfix                               0x08005980   Section       94  dfix.o(x$fpl$dfix)
+    x$fpl$dleqf                              0x080059e0   Section      120  dleqf.o(x$fpl$dleqf)
+    x$fpl$dnaninf                            0x08005a58   Section      156  dnaninf.o(x$fpl$dnaninf)
+    x$fpl$drleqf                             0x08005af4   Section      108  drleqf.o(x$fpl$drleqf)
+    x$fpl$fretinf                            0x08005b60   Section       10  fretinf.o(x$fpl$fretinf)
+    x$fpl$printf1                            0x08005b6a   Section        4  printf1.o(x$fpl$printf1)
+    x$fpl$printf2                            0x08005b6e   Section        4  printf2.o(x$fpl$printf2)
+    x$fpl$retnan                             0x08005b72   Section      100  retnan.o(x$fpl$retnan)
+    x$fpl$scalbn                             0x08005bd6   Section       92  scalbn.o(x$fpl$scalbn)
+    x$fpl$scanf1                             0x08005c32   Section        4  scanf1.o(x$fpl$scanf1)
+    x$fpl$scanf2                             0x08005c36   Section        8  scanf2.o(x$fpl$scanf2)
+    x$fpl$trapveneer                         0x08005c3e   Section       48  trapv.o(x$fpl$trapveneer)
+    .constdata                               0x08005c6e   Section       40  _printf_hex_int_ll_ptr.o(.constdata)
+    x$fpl$usenofp                            0x08005c6e   Section        0  usenofp.o(x$fpl$usenofp)
+    uc_hextab                                0x08005c6e   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
+    lc_hextab                                0x08005c82   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
+    .constdata                               0x08005c96   Section       17  __printf_flags_ss_wp.o(.constdata)
+    maptable                                 0x08005c96   Data          17  __printf_flags_ss_wp.o(.constdata)
+    .constdata                               0x08005ca8   Section        8  _printf_wctomb.o(.constdata)
+    initial_mbstate                          0x08005ca8   Data           8  _printf_wctomb.o(.constdata)
+    .constdata                               0x08005cb0   Section       38  _printf_fp_hex.o(.constdata)
+    lc_hextab                                0x08005cb0   Data          19  _printf_fp_hex.o(.constdata)
+    uc_hextab                                0x08005cc3   Data          19  _printf_fp_hex.o(.constdata)
+    .constdata                               0x08005cd8   Section      148  bigflt0.o(.constdata)
+    tenpwrs_x                                0x08005cd8   Data          60  bigflt0.o(.constdata)
+    tenpwrs_i                                0x08005d14   Data          64  bigflt0.o(.constdata)
+    .conststring                             0x08005d6c   Section      130  main.o(.conststring)
+    c$$dinf                                  0x08005e10   Section        8  fpconst.o(c$$dinf)
+    locale$$data                             0x08005e18   Section      272  lc_ctype_c.o(locale$$data)
+    __lcctype_c_name                         0x08005e1c   Data           2  lc_ctype_c.o(locale$$data)
+    __lcctype_c_start                        0x08005e24   Data           0  lc_ctype_c.o(locale$$data)
+    locale$$data                             0x08005f28   Section       28  lc_numeric_c.o(locale$$data)
+    __lcctype_c_end                          0x08005f28   Data           0  lc_ctype_c.o(locale$$data)
+    __lcnum_c_name                           0x08005f2c   Data           2  lc_numeric_c.o(locale$$data)
+    __lcnum_c_start                          0x08005f34   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_point                          0x08005f40   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_thousands                      0x08005f42   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_grouping                       0x08005f43   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_end                            0x08005f44   Data           0  lc_numeric_c.o(locale$$data)
     .data                                    0x20000000   Section       20  stm32f10x_rcc.o(.data)
     APBAHBPrescTable                         0x20000000   Data          16  stm32f10x_rcc.o(.data)
     ADCPrescTable                            0x20000010   Data           4  stm32f10x_rcc.o(.data)
@@ -2601,55 +2612,58 @@ Image Symbol Table
     cJSON_Delete                             0x08004381   Thumb Code    92  cjson.o(i.cJSON_Delete)
     cJSON_GetErrorPtr                        0x080043e1   Thumb Code    12  cjson.o(i.cJSON_GetErrorPtr)
     cJSON_GetObjectItemCaseSensitive         0x080043f1   Thumb Code    18  cjson.o(i.cJSON_GetObjectItemCaseSensitive)
-    cJSON_IsNumber                           0x08004403   Thumb Code    22  cjson.o(i.cJSON_IsNumber)
-    cJSON_IsString                           0x08004419   Thumb Code    22  cjson.o(i.cJSON_IsString)
-    cJSON_Parse                              0x08004449   Thumb Code    16  cjson.o(i.cJSON_Parse)
-    cJSON_ParseWithLengthOpts                0x08004459   Thumb Code   204  cjson.o(i.cJSON_ParseWithLengthOpts)
-    cJSON_ParseWithOpts                      0x0800452d   Thumb Code    40  cjson.o(i.cJSON_ParseWithOpts)
-    frexp                                    0x0800459d   Thumb Code    80  frexp.o(i.frexp)
-    handle_mqtt_message                      0x0800464d   Thumb Code    54  esp8266-01s.o(i.handle_mqtt_message)
-    ldexp                                    0x080046bd   Thumb Code   116  ldexp.o(i.ldexp)
-    main                                     0x08004731   Thumb Code    94  main.o(i.main)
-    my_printf                                0x08004811   Thumb Code    48  serial.o(i.my_printf)
-    parse_control_command                    0x0800493d   Thumb Code    94  json_parser.o(i.parse_control_command)
-    parse_dim_command                        0x080049c9   Thumb Code   182  json_parser.o(i.parse_dim_command)
-    parse_status_command                     0x08004e55   Thumb Code     6  json_parser.o(i.parse_status_command)
-    parse_switch_command                     0x08004fe9   Thumb Code   182  json_parser.o(i.parse_switch_command)
-    strtod                                   0x080052d9   Thumb Code    28  strtod.o(i.strtod)
-    _get_lc_ctype                            0x08005421   Thumb Code    44  lc_ctype_c.o(locale$$code)
-    _get_lc_numeric                          0x0800544d   Thumb Code    44  lc_numeric_c.o(locale$$code)
-    __aeabi_d2f                              0x08005479   Thumb Code     0  d2f.o(x$fpl$d2f)
-    _d2f                                     0x08005479   Thumb Code    98  d2f.o(x$fpl$d2f)
-    __fpl_dcheck_NaN1                        0x080054dd   Thumb Code    10  dcheck1.o(x$fpl$dcheck1)
-    __fpl_dcmp_Inf                           0x080054ed   Thumb Code    24  dcmpi.o(x$fpl$dcmpinf)
-    __aeabi_cdcmpeq                          0x08005505   Thumb Code     0  deqf.o(x$fpl$deqf)
-    _dcmpeq                                  0x08005505   Thumb Code   120  deqf.o(x$fpl$deqf)
-    __aeabi_d2iz                             0x0800557d   Thumb Code     0  dfix.o(x$fpl$dfix)
-    _dfix                                    0x0800557d   Thumb Code    94  dfix.o(x$fpl$dfix)
-    __aeabi_cdcmple                          0x080055dd   Thumb Code     0  dleqf.o(x$fpl$dleqf)
-    _dcmple                                  0x080055dd   Thumb Code   120  dleqf.o(x$fpl$dleqf)
-    __fpl_dcmple_InfNaN                      0x0800563f   Thumb Code     0  dleqf.o(x$fpl$dleqf)
-    __fpl_dnaninf                            0x08005655   Thumb Code   156  dnaninf.o(x$fpl$dnaninf)
-    __aeabi_cdrcmple                         0x080056f1   Thumb Code     0  drleqf.o(x$fpl$drleqf)
-    _drcmple                                 0x080056f1   Thumb Code   108  drleqf.o(x$fpl$drleqf)
-    __fpl_fretinf                            0x0800575d   Thumb Code    10  fretinf.o(x$fpl$fretinf)
-    _printf_fp_dec                           0x08005767   Thumb Code     4  printf1.o(x$fpl$printf1)
-    _printf_fp_hex                           0x0800576b   Thumb Code     4  printf2.o(x$fpl$printf2)
-    __fpl_return_NaN                         0x0800576f   Thumb Code   100  retnan.o(x$fpl$retnan)
-    __ARM_scalbn                             0x080057d3   Thumb Code    92  scalbn.o(x$fpl$scalbn)
-    _scanf_real                              0x0800582f   Thumb Code     4  scanf1.o(x$fpl$scanf1)
-    _scanf_hex_real                          0x08005833   Thumb Code     4  scanf2.o(x$fpl$scanf2)
-    _scanf_infnan                            0x08005837   Thumb Code     4  scanf2.o(x$fpl$scanf2)
-    __fpl_cmpreturn                          0x0800583b   Thumb Code    48  trapv.o(x$fpl$trapveneer)
-    __I$use$fp                               0x0800586a   Number         0  usenofp.o(x$fpl$usenofp)
-    Region$$Table$$Base                      0x080059ec   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08005a0c   Number         0  anon$$obj.o(Region$$Table)
-    __aeabi_HUGE_VAL                         0x08005a0c   Data           0  fpconst.o(c$$dinf)
-    __aeabi_HUGE_VALL                        0x08005a0c   Data           0  fpconst.o(c$$dinf)
-    __aeabi_INFINITY                         0x08005a0c   Data           0  fpconst.o(c$$dinf)
-    __dInf                                   0x08005a0c   Data           0  fpconst.o(c$$dinf)
-    __huge_val                               0x08005a0c   Data           0  fpconst.o(c$$dinf)
-    __ctype                                  0x08005a21   Data           0  lc_ctype_c.o(locale$$data)
+    cJSON_IsBool                             0x08004403   Thumb Code    24  cjson.o(i.cJSON_IsBool)
+    cJSON_IsNumber                           0x0800441b   Thumb Code    22  cjson.o(i.cJSON_IsNumber)
+    cJSON_IsObject                           0x08004431   Thumb Code    22  cjson.o(i.cJSON_IsObject)
+    cJSON_IsString                           0x08004447   Thumb Code    22  cjson.o(i.cJSON_IsString)
+    cJSON_IsTrue                             0x0800445d   Thumb Code    22  cjson.o(i.cJSON_IsTrue)
+    cJSON_Parse                              0x0800448d   Thumb Code    16  cjson.o(i.cJSON_Parse)
+    cJSON_ParseWithLengthOpts                0x0800449d   Thumb Code   204  cjson.o(i.cJSON_ParseWithLengthOpts)
+    cJSON_ParseWithOpts                      0x08004571   Thumb Code    40  cjson.o(i.cJSON_ParseWithOpts)
+    frexp                                    0x080045e1   Thumb Code    80  frexp.o(i.frexp)
+    handle_mqtt_message                      0x08004691   Thumb Code    54  esp8266-01s.o(i.handle_mqtt_message)
+    ldexp                                    0x08004701   Thumb Code   116  ldexp.o(i.ldexp)
+    main                                     0x08004775   Thumb Code    98  main.o(i.main)
+    my_printf                                0x0800483d   Thumb Code    48  serial.o(i.my_printf)
+    parse_control_command                    0x08004969   Thumb Code    94  json_parser.o(i.parse_control_command)
+    parse_dim_command                        0x080049f5   Thumb Code   182  json_parser.o(i.parse_dim_command)
+    parse_status_command                     0x08004e81   Thumb Code   500  json_parser.o(i.parse_status_command)
+    parse_switch_command                     0x080053ed   Thumb Code   182  json_parser.o(i.parse_switch_command)
+    strtod                                   0x080056dd   Thumb Code    28  strtod.o(i.strtod)
+    _get_lc_ctype                            0x08005825   Thumb Code    44  lc_ctype_c.o(locale$$code)
+    _get_lc_numeric                          0x08005851   Thumb Code    44  lc_numeric_c.o(locale$$code)
+    __aeabi_d2f                              0x0800587d   Thumb Code     0  d2f.o(x$fpl$d2f)
+    _d2f                                     0x0800587d   Thumb Code    98  d2f.o(x$fpl$d2f)
+    __fpl_dcheck_NaN1                        0x080058e1   Thumb Code    10  dcheck1.o(x$fpl$dcheck1)
+    __fpl_dcmp_Inf                           0x080058f1   Thumb Code    24  dcmpi.o(x$fpl$dcmpinf)
+    __aeabi_cdcmpeq                          0x08005909   Thumb Code     0  deqf.o(x$fpl$deqf)
+    _dcmpeq                                  0x08005909   Thumb Code   120  deqf.o(x$fpl$deqf)
+    __aeabi_d2iz                             0x08005981   Thumb Code     0  dfix.o(x$fpl$dfix)
+    _dfix                                    0x08005981   Thumb Code    94  dfix.o(x$fpl$dfix)
+    __aeabi_cdcmple                          0x080059e1   Thumb Code     0  dleqf.o(x$fpl$dleqf)
+    _dcmple                                  0x080059e1   Thumb Code   120  dleqf.o(x$fpl$dleqf)
+    __fpl_dcmple_InfNaN                      0x08005a43   Thumb Code     0  dleqf.o(x$fpl$dleqf)
+    __fpl_dnaninf                            0x08005a59   Thumb Code   156  dnaninf.o(x$fpl$dnaninf)
+    __aeabi_cdrcmple                         0x08005af5   Thumb Code     0  drleqf.o(x$fpl$drleqf)
+    _drcmple                                 0x08005af5   Thumb Code   108  drleqf.o(x$fpl$drleqf)
+    __fpl_fretinf                            0x08005b61   Thumb Code    10  fretinf.o(x$fpl$fretinf)
+    _printf_fp_dec                           0x08005b6b   Thumb Code     4  printf1.o(x$fpl$printf1)
+    _printf_fp_hex                           0x08005b6f   Thumb Code     4  printf2.o(x$fpl$printf2)
+    __fpl_return_NaN                         0x08005b73   Thumb Code   100  retnan.o(x$fpl$retnan)
+    __ARM_scalbn                             0x08005bd7   Thumb Code    92  scalbn.o(x$fpl$scalbn)
+    _scanf_real                              0x08005c33   Thumb Code     4  scanf1.o(x$fpl$scanf1)
+    _scanf_hex_real                          0x08005c37   Thumb Code     4  scanf2.o(x$fpl$scanf2)
+    _scanf_infnan                            0x08005c3b   Thumb Code     4  scanf2.o(x$fpl$scanf2)
+    __fpl_cmpreturn                          0x08005c3f   Thumb Code    48  trapv.o(x$fpl$trapveneer)
+    __I$use$fp                               0x08005c6e   Number         0  usenofp.o(x$fpl$usenofp)
+    Region$$Table$$Base                      0x08005df0   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08005e10   Number         0  anon$$obj.o(Region$$Table)
+    __aeabi_HUGE_VAL                         0x08005e10   Data           0  fpconst.o(c$$dinf)
+    __aeabi_HUGE_VALL                        0x08005e10   Data           0  fpconst.o(c$$dinf)
+    __aeabi_INFINITY                         0x08005e10   Data           0  fpconst.o(c$$dinf)
+    __dInf                                   0x08005e10   Data           0  fpconst.o(c$$dinf)
+    __huge_val                               0x08005e10   Data           0  fpconst.o(c$$dinf)
+    __ctype                                  0x08005e25   Data           0  lc_ctype_c.o(locale$$data)
     usart1_rx_index                          0x20000028   Data           4  serial.o(.data)
     usart1_rx_flag                           0x2000002c   Data           1  serial.o(.data)
     usart2_rx_index                          0x20000030   Data           4  serial.o(.data)
@@ -2673,9 +2687,9 @@ Memory Map of the image
 
   Image Entry point : 0x080000ed
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00005b7c, Max: 0x00010000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00005f80, Max: 0x00010000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00005b40, Max: 0x00010000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00005f44, Max: 0x00010000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2907,69 +2921,73 @@ Memory Map of the image
     0x08004380   0x00000060   Code   RO         3230    i.cJSON_Delete      cjson.o
     0x080043e0   0x00000010   Code   RO         3242    i.cJSON_GetErrorPtr  cjson.o
     0x080043f0   0x00000012   Code   RO         3245    i.cJSON_GetObjectItemCaseSensitive  cjson.o
-    0x08004402   0x00000016   Code   RO         3255    i.cJSON_IsNumber    cjson.o
-    0x08004418   0x00000016   Code   RO         3258    i.cJSON_IsString    cjson.o
-    0x0800442e   0x0000001a   Code   RO         3261    i.cJSON_New_Item    cjson.o
-    0x08004448   0x00000010   Code   RO         3262    i.cJSON_Parse       cjson.o
-    0x08004458   0x000000d4   Code   RO         3264    i.cJSON_ParseWithLengthOpts  cjson.o
-    0x0800452c   0x00000028   Code   RO         3265    i.cJSON_ParseWithOpts  cjson.o
-    0x08004554   0x00000048   Code   RO         3280    i.case_insensitive_strcmp  cjson.o
-    0x0800459c   0x00000058   Code   RO         4911    i.frexp             m_ws.l(frexp.o)
-    0x080045f4   0x00000004   Code   RO         3286    i.get_decimal_point  cjson.o
-    0x080045f8   0x00000052   Code   RO         3287    i.get_object_item   cjson.o
-    0x0800464a   0x00000002   PAD
-    0x0800464c   0x00000070   Code   RO         4188    i.handle_mqtt_message  esp8266-01s.o
-    0x080046bc   0x00000074   Code   RO         4950    i.ldexp             m_ws.l(ldexp.o)
-    0x08004730   0x000000e0   Code   RO         4285    i.main              main.o
-    0x08004810   0x00000034   Code   RO         4106    i.my_printf         serial.o
-    0x08004844   0x000000f8   Code   RO         3289    i.parse_array       cjson.o
-    0x0800493c   0x0000008c   Code   RO         4369    i.parse_control_command  json_parser.o
-    0x080049c8   0x00000174   Code   RO         4370    i.parse_dim_command  json_parser.o
-    0x08004b3c   0x0000005a   Code   RO         3290    i.parse_hex4        cjson.o
-    0x08004b96   0x00000002   PAD
-    0x08004b98   0x00000170   Code   RO         3291    i.parse_number      cjson.o
-    0x08004d08   0x0000014c   Code   RO         3292    i.parse_object      cjson.o
-    0x08004e54   0x00000006   Code   RO         4371    i.parse_status_command  json_parser.o
-    0x08004e5a   0x0000018e   Code   RO         3293    i.parse_string      cjson.o
-    0x08004fe8   0x00000178   Code   RO         4372    i.parse_switch_command  json_parser.o
-    0x08005160   0x0000013c   Code   RO         3294    i.parse_value       cjson.o
-    0x0800529c   0x0000003c   Code   RO         3305    i.skip_utf8_bom     cjson.o
-    0x080052d8   0x0000001c   Code   RO         4611    i.strtod            m_ws.l(strtod.o)
-    0x080052f4   0x0000012c   Code   RO         3308    i.utf16_literal_to_utf8  cjson.o
-    0x08005420   0x0000002c   Code   RO         4842    locale$$code        c_w.l(lc_ctype_c.o)
-    0x0800544c   0x0000002c   Code   RO         4845    locale$$code        c_w.l(lc_numeric_c.o)
-    0x08005478   0x00000062   Code   RO         4908    x$fpl$d2f           fz_ws.l(d2f.o)
-    0x080054da   0x00000002   PAD
-    0x080054dc   0x00000010   Code   RO         4971    x$fpl$dcheck1       fz_ws.l(dcheck1.o)
-    0x080054ec   0x00000018   Code   RO         4746    x$fpl$dcmpinf       fz_ws.l(dcmpi.o)
-    0x08005504   0x00000078   Code   RO         4586    x$fpl$deqf          fz_ws.l(deqf.o)
-    0x0800557c   0x0000005e   Code   RO         4588    x$fpl$dfix          fz_ws.l(dfix.o)
-    0x080055da   0x00000002   PAD
-    0x080055dc   0x00000078   Code   RO         4598    x$fpl$dleqf         fz_ws.l(dleqf.o)
-    0x08005654   0x0000009c   Code   RO         4748    x$fpl$dnaninf       fz_ws.l(dnaninf.o)
-    0x080056f0   0x0000006c   Code   RO         4602    x$fpl$drleqf        fz_ws.l(drleqf.o)
-    0x0800575c   0x0000000a   Code   RO         4944    x$fpl$fretinf       fz_ws.l(fretinf.o)
-    0x08005766   0x00000004   Code   RO         4606    x$fpl$printf1       fz_ws.l(printf1.o)
-    0x0800576a   0x00000004   Code   RO         4754    x$fpl$printf2       fz_ws.l(printf2.o)
-    0x0800576e   0x00000064   Code   RO         5011    x$fpl$retnan        fz_ws.l(retnan.o)
-    0x080057d2   0x0000005c   Code   RO         4946    x$fpl$scalbn        fz_ws.l(scalbn.o)
-    0x0800582e   0x00000004   Code   RO         4608    x$fpl$scanf1        fz_ws.l(scanf1.o)
-    0x08005832   0x00000008   Code   RO         4863    x$fpl$scanf2        fz_ws.l(scanf2.o)
-    0x0800583a   0x00000030   Code   RO         5013    x$fpl$trapveneer    fz_ws.l(trapv.o)
-    0x0800586a   0x00000000   Code   RO         4760    x$fpl$usenofp       fz_ws.l(usenofp.o)
-    0x0800586a   0x00000028   Data   RO         4524    .constdata          c_w.l(_printf_hex_int_ll_ptr.o)
-    0x08005892   0x00000011   Data   RO         4544    .constdata          c_w.l(__printf_flags_ss_wp.o)
-    0x080058a3   0x00000001   PAD
-    0x080058a4   0x00000008   Data   RO         4661    .constdata          c_w.l(_printf_wctomb.o)
-    0x080058ac   0x00000026   Data   RO         4804    .constdata          c_w.l(_printf_fp_hex.o)
-    0x080058d2   0x00000002   PAD
-    0x080058d4   0x00000094   Data   RO         4815    .constdata          c_w.l(bigflt0.o)
-    0x08005968   0x00000082   Data   RO         4286    .conststring        main.o
-    0x080059ea   0x00000002   PAD
-    0x080059ec   0x00000020   Data   RO         5015    Region$$Table       anon$$obj.o
-    0x08005a0c   0x00000008   Data   RO         4856    c$$dinf             fz_ws.l(fpconst.o)
-    0x08005a14   0x00000110   Data   RO         4841    locale$$data        c_w.l(lc_ctype_c.o)
-    0x08005b24   0x0000001c   Data   RO         4844    locale$$data        c_w.l(lc_numeric_c.o)
+    0x08004402   0x00000018   Code   RO         3251    i.cJSON_IsBool      cjson.o
+    0x0800441a   0x00000016   Code   RO         3255    i.cJSON_IsNumber    cjson.o
+    0x08004430   0x00000016   Code   RO         3256    i.cJSON_IsObject    cjson.o
+    0x08004446   0x00000016   Code   RO         3258    i.cJSON_IsString    cjson.o
+    0x0800445c   0x00000016   Code   RO         3259    i.cJSON_IsTrue      cjson.o
+    0x08004472   0x0000001a   Code   RO         3261    i.cJSON_New_Item    cjson.o
+    0x0800448c   0x00000010   Code   RO         3262    i.cJSON_Parse       cjson.o
+    0x0800449c   0x000000d4   Code   RO         3264    i.cJSON_ParseWithLengthOpts  cjson.o
+    0x08004570   0x00000028   Code   RO         3265    i.cJSON_ParseWithOpts  cjson.o
+    0x08004598   0x00000048   Code   RO         3280    i.case_insensitive_strcmp  cjson.o
+    0x080045e0   0x00000058   Code   RO         4911    i.frexp             m_ws.l(frexp.o)
+    0x08004638   0x00000004   Code   RO         3286    i.get_decimal_point  cjson.o
+    0x0800463c   0x00000052   Code   RO         3287    i.get_object_item   cjson.o
+    0x0800468e   0x00000002   PAD
+    0x08004690   0x00000070   Code   RO         4188    i.handle_mqtt_message  esp8266-01s.o
+    0x08004700   0x00000074   Code   RO         4950    i.ldexp             m_ws.l(ldexp.o)
+    0x08004774   0x000000c8   Code   RO         4285    i.main              main.o
+    0x0800483c   0x00000034   Code   RO         4106    i.my_printf         serial.o
+    0x08004870   0x000000f8   Code   RO         3289    i.parse_array       cjson.o
+    0x08004968   0x0000008c   Code   RO         4369    i.parse_control_command  json_parser.o
+    0x080049f4   0x00000174   Code   RO         4370    i.parse_dim_command  json_parser.o
+    0x08004b68   0x0000005a   Code   RO         3290    i.parse_hex4        cjson.o
+    0x08004bc2   0x00000002   PAD
+    0x08004bc4   0x00000170   Code   RO         3291    i.parse_number      cjson.o
+    0x08004d34   0x0000014c   Code   RO         3292    i.parse_object      cjson.o
+    0x08004e80   0x000003dc   Code   RO         4371    i.parse_status_command  json_parser.o
+    0x0800525c   0x0000018e   Code   RO         3293    i.parse_string      cjson.o
+    0x080053ea   0x00000002   PAD
+    0x080053ec   0x00000178   Code   RO         4372    i.parse_switch_command  json_parser.o
+    0x08005564   0x0000013c   Code   RO         3294    i.parse_value       cjson.o
+    0x080056a0   0x0000003c   Code   RO         3305    i.skip_utf8_bom     cjson.o
+    0x080056dc   0x0000001c   Code   RO         4611    i.strtod            m_ws.l(strtod.o)
+    0x080056f8   0x0000012c   Code   RO         3308    i.utf16_literal_to_utf8  cjson.o
+    0x08005824   0x0000002c   Code   RO         4842    locale$$code        c_w.l(lc_ctype_c.o)
+    0x08005850   0x0000002c   Code   RO         4845    locale$$code        c_w.l(lc_numeric_c.o)
+    0x0800587c   0x00000062   Code   RO         4908    x$fpl$d2f           fz_ws.l(d2f.o)
+    0x080058de   0x00000002   PAD
+    0x080058e0   0x00000010   Code   RO         4971    x$fpl$dcheck1       fz_ws.l(dcheck1.o)
+    0x080058f0   0x00000018   Code   RO         4746    x$fpl$dcmpinf       fz_ws.l(dcmpi.o)
+    0x08005908   0x00000078   Code   RO         4586    x$fpl$deqf          fz_ws.l(deqf.o)
+    0x08005980   0x0000005e   Code   RO         4588    x$fpl$dfix          fz_ws.l(dfix.o)
+    0x080059de   0x00000002   PAD
+    0x080059e0   0x00000078   Code   RO         4598    x$fpl$dleqf         fz_ws.l(dleqf.o)
+    0x08005a58   0x0000009c   Code   RO         4748    x$fpl$dnaninf       fz_ws.l(dnaninf.o)
+    0x08005af4   0x0000006c   Code   RO         4602    x$fpl$drleqf        fz_ws.l(drleqf.o)
+    0x08005b60   0x0000000a   Code   RO         4944    x$fpl$fretinf       fz_ws.l(fretinf.o)
+    0x08005b6a   0x00000004   Code   RO         4606    x$fpl$printf1       fz_ws.l(printf1.o)
+    0x08005b6e   0x00000004   Code   RO         4754    x$fpl$printf2       fz_ws.l(printf2.o)
+    0x08005b72   0x00000064   Code   RO         5011    x$fpl$retnan        fz_ws.l(retnan.o)
+    0x08005bd6   0x0000005c   Code   RO         4946    x$fpl$scalbn        fz_ws.l(scalbn.o)
+    0x08005c32   0x00000004   Code   RO         4608    x$fpl$scanf1        fz_ws.l(scanf1.o)
+    0x08005c36   0x00000008   Code   RO         4863    x$fpl$scanf2        fz_ws.l(scanf2.o)
+    0x08005c3e   0x00000030   Code   RO         5013    x$fpl$trapveneer    fz_ws.l(trapv.o)
+    0x08005c6e   0x00000000   Code   RO         4760    x$fpl$usenofp       fz_ws.l(usenofp.o)
+    0x08005c6e   0x00000028   Data   RO         4524    .constdata          c_w.l(_printf_hex_int_ll_ptr.o)
+    0x08005c96   0x00000011   Data   RO         4544    .constdata          c_w.l(__printf_flags_ss_wp.o)
+    0x08005ca7   0x00000001   PAD
+    0x08005ca8   0x00000008   Data   RO         4661    .constdata          c_w.l(_printf_wctomb.o)
+    0x08005cb0   0x00000026   Data   RO         4804    .constdata          c_w.l(_printf_fp_hex.o)
+    0x08005cd6   0x00000002   PAD
+    0x08005cd8   0x00000094   Data   RO         4815    .constdata          c_w.l(bigflt0.o)
+    0x08005d6c   0x00000082   Data   RO         4286    .conststring        main.o
+    0x08005dee   0x00000002   PAD
+    0x08005df0   0x00000020   Data   RO         5015    Region$$Table       anon$$obj.o
+    0x08005e10   0x00000008   Data   RO         4856    c$$dinf             fz_ws.l(fpconst.o)
+    0x08005e18   0x00000110   Data   RO         4841    locale$$data        c_w.l(lc_ctype_c.o)
+    0x08005f28   0x0000001c   Data   RO         4844    locale$$data        c_w.l(lc_numeric_c.o)
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00001f20, Max: 0x00005000, ABSOLUTE)
@@ -2996,12 +3014,12 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      2810         70          0         20          0      20516   cjson.o
+      2878         70          0         20          0      22255   cjson.o
          0          0          0          0          0       4548   core_cm3.o
         70          0          0          0          0       1050   delay.o
       1772       1064          0          4       2176       6845   esp8266-01s.o
-       894        430          0          0          0       5766   json_parser.o
-       224        130        130          0          0        535   main.o
+      1876        918          0          0          0       6678   json_parser.o
+       200        102        130          0          0        543   main.o
        132         22          0          0          0     205059   misc.o
        768         52          0         13       4096       6158   serial.o
         64         26        236          0       1536        852   startup_stm32f10x_md.o
@@ -3013,9 +3031,9 @@ Image component sizes
        328         28          0          0          0      25321   system_stm32f10x.o
 
     ----------------------------------------------------------------------
-      8380       1894        400         60       7808     323043   Object Totals
+      9408       2354        400         60       7808     325702   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        14          0          2          3          0          0   (incl. Padding)
+        16          0          2          3          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -3181,15 +3199,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     22398       2364        962         60       7908     323167   Grand Totals
-     22398       2364        962         60       7908     323167   ELF Image Totals
-     22398       2364        962         60          0          0   ROM Totals
+     23426       2824        962         60       7908     325670   Grand Totals
+     23426       2824        962         60       7908     325670   ELF Image Totals
+     23426       2824        962         60          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                23360 (  22.81kB)
+    Total RO  Size (Code + RO Data)                24388 (  23.82kB)
     Total RW  Size (RW Data + ZI Data)              7968 (   7.78kB)
-    Total ROM Size (Code + RO Data + RW Data)      23420 (  22.87kB)
+    Total ROM Size (Code + RO Data + RW Data)      24448 (  23.88kB)
 
 ==============================================================================
 
