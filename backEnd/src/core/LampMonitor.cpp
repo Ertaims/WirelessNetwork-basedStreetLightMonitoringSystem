@@ -6,13 +6,15 @@
 #include <sstream>
 #include <mutex>
 
+std::mutex g_cout_mutex; // 全局互斥锁保护输出
+
 // 前时间的格式化字符串 "YYYY-MM-DD HH:MM:SS"
 static std::string getCurrentTimestamp() {
-    auto now = std::chrono::system_clock::now(); // 获取当前时间点
-    std::time_t now_c = std::chrono::system_clock::to_time_t(now); // 转换为time_t类型
-    std::tm* now_tm = std::localtime(&now_c); // 转换为本地时间结构体
-    std::ostringstream oss; // 创建字符串流
-    oss << std::put_time(now_tm, "%Y-%m-%d %H:%M:%S"); // 格式化时间
+    auto now = std::chrono::system_clock::now();                        // 获取当前时间点
+    std::time_t now_c = std::chrono::system_clock::to_time_t(now);      // 转换为time_t类型
+    std::tm* now_tm = std::localtime(&now_c);                           // 转换为本地时间结构体
+    std::ostringstream oss;                                             // 创建字符串流
+    oss << std::put_time(now_tm, "%Y-%m-%d %H:%M:%S");                  // 格式化时间
     return oss.str();
 }
 
@@ -39,10 +41,6 @@ bool LampMonitor::start()
         return false;
     }
 
-    if(!mqtt_client.subscribe(lamp_group_control_topic)) {
-        return false;
-    }
-
     if(!mqtt_client.subscribe(lamp_status_topic + "+")) {
         return false;
     }
@@ -59,11 +57,13 @@ void LampMonitor::stop()
     std::cout << "LampMonitor已停止." << std::endl;
 }
 
-void LampMonitor::controlLamp(const std::string &lamp_id, const std::string &command, int brightness)
+void LampMonitor::controlLamp(const std::string& command, const std::string &value, const char group, const std::string& lamp_id, int brightness)
 {
     json control_msg;
-    control_msg["lamp_id"] = lamp_id;
     control_msg["command"] = command;
+    control_msg["value"] = value;
+    control_msg["group"] = group;
+    control_msg["lamp_id"] = lamp_id;
     control_msg["timestamp"] = getCurrentTimestamp();
 
     if (command == "ON")
@@ -81,8 +81,7 @@ void LampMonitor::controlLamp(const std::string &lamp_id, const std::string &com
 
 void LampMonitor::onMessageReceived(const std::string &topic, const std::string &payload)
 {
-    static std::mutex cout_mtx;
-    std::lock_guard<std::mutex> lk(cout_mtx); // 避免输出交错
+    std::lock_guard<std::mutex> lock(g_cout_mutex);
 
     std::cout << "收到消息 [主题: " << topic << ", 内容: " << payload << "]" << std::endl;
 
@@ -94,12 +93,11 @@ void LampMonitor::onMessageReceived(const std::string &topic, const std::string 
         if (topic.rfind("lamp/control/", 0) == 0) {
             std::string lamp_id = msg.value("lamp_id", "");
             std::string command = msg.value("command", "");
+            std::string value_ = msg.value("value", "");
             int brightness = msg.value("brightness", 0);
 
-            
-
-            std::cout << "控制灯 " << lamp_id << " 执行命令: " << command << " 亮度: " << brightness << std::endl;
-            publishLampStatus(lamp_id, command, brightness);
+            std::cout << "控制灯 " << lamp_id << " 执行命令: " << value_ << " 亮度: " << brightness << std::endl;
+            //publishLampStatus(lamp_id, value_, brightness);
         }
         else if (topic.rfind("lamp/status/", 0) == 0) {
             std::string lamp_id = msg.value("lamp_id", "");

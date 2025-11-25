@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/cxk/backEnd/src/core/LampMonitor.cpp" "CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o" "gcc" "CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o.d"
-  "/home/cxk/backEnd/src/main.cpp" "CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o" "gcc" "CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o.d"
-  "/home/cxk/backEnd/src/mqtt/MQTTClientCpp.cpp" "CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o" "gcc" "CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o.d"
+  "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/core/LampMonitor.cpp" "CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o" "gcc" "CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o.d"
+  "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/main.cpp" "CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o" "gcc" "CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o.d"
+  "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/mqtt/MQTTClientCpp.cpp" "CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o" "gcc" "CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cxk/backEnd
+CMAKE_SOURCE_DIR = /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cxk/backEnd/build
+CMAKE_BINARY_DIR = /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/streetlight-monitor-backend.dir/depend.make
@@ -72,44 +72,44 @@ include CMakeFiles/streetlight-monitor-backend.dir/flags.make
 CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o: CMakeFiles/streetlight-monitor-backend.dir/flags.make
 CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o: CMakeFiles/streetlight-monitor-backend.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cxk/backEnd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o -MF CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o.d -o CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o -c /home/cxk/backEnd/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o -MF CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o.d -o CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/main.cpp
 
 CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cxk/backEnd/src/main.cpp > CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/main.cpp > CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.i
 
 CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cxk/backEnd/src/main.cpp -o CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/main.cpp -o CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.s
 
 CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o: CMakeFiles/streetlight-monitor-backend.dir/flags.make
 CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o: ../src/mqtt/MQTTClientCpp.cpp
 CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o: CMakeFiles/streetlight-monitor-backend.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cxk/backEnd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o -MF CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o.d -o CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o -c /home/cxk/backEnd/src/mqtt/MQTTClientCpp.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o -MF CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o.d -o CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/mqtt/MQTTClientCpp.cpp
 
 CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cxk/backEnd/src/mqtt/MQTTClientCpp.cpp > CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/mqtt/MQTTClientCpp.cpp > CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.i
 
 CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cxk/backEnd/src/mqtt/MQTTClientCpp.cpp -o CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/mqtt/MQTTClientCpp.cpp -o CMakeFiles/streetlight-monitor-backend.dir/src/mqtt/MQTTClientCpp.cpp.s
 
 CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o: CMakeFiles/streetlight-monitor-backend.dir/flags.make
 CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o: ../src/core/LampMonitor.cpp
 CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o: CMakeFiles/streetlight-monitor-backend.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cxk/backEnd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o -MF CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o.d -o CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o -c /home/cxk/backEnd/src/core/LampMonitor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o -MF CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o.d -o CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/core/LampMonitor.cpp
 
 CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cxk/backEnd/src/core/LampMonitor.cpp > CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/core/LampMonitor.cpp > CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.i
 
 CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cxk/backEnd/src/core/LampMonitor.cpp -o CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/core/LampMonitor.cpp -o CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.s
 
 # Object files for target streetlight-monitor-backend
 streetlight__monitor__backend_OBJECTS = \
@@ -127,7 +127,7 @@ streetlight-monitor-backend: CMakeFiles/streetlight-monitor-backend.dir/build.ma
 streetlight-monitor-backend: /usr/local/lib/libpaho-mqttpp3.so
 streetlight-monitor-backend: /usr/local/lib/libpaho-mqtt3a.so
 streetlight-monitor-backend: CMakeFiles/streetlight-monitor-backend.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cxk/backEnd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable streetlight-monitor-backend"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable streetlight-monitor-backend"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/streetlight-monitor-backend.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -139,6 +139,6 @@ CMakeFiles/streetlight-monitor-backend.dir/clean:
 .PHONY : CMakeFiles/streetlight-monitor-backend.dir/clean
 
 CMakeFiles/streetlight-monitor-backend.dir/depend:
-	cd /home/cxk/backEnd/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cxk/backEnd /home/cxk/backEnd /home/cxk/backEnd/build /home/cxk/backEnd/build /home/cxk/backEnd/build/CMakeFiles/streetlight-monitor-backend.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build/CMakeFiles/streetlight-monitor-backend.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/streetlight-monitor-backend.dir/depend
 

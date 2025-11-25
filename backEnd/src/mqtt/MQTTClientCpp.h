@@ -2,6 +2,7 @@
 #include <iostream>
 #include <mqtt/async_client.h>
 #include <string>
+#include <mutex>
 
 class MQTTClientCpp : public virtual mqtt::callback {
 public:

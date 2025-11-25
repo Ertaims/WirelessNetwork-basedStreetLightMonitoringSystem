@@ -9,7 +9,7 @@ public:
     LampMonitor(const std::string& server_address, const std::string& client_id);
     bool start();
     void stop();
-    void controlLamp(const std::string& lamp_id, const std::string& command, int brightness = 50);
+    void controlLamp(const std::string& command, const std::string &value, const char group, const std::string& lamp_id, int brightness = 50);
 
 private:
     void onMessageReceived(const std::string& topic, const std::string& payload);
@@ -21,6 +21,5 @@ private:
     // 主题格式
     const std::string lamp_control_topic = "lamp/control/";
     const std::string lamp_status_topic = "lamp/status/";
-    const std::string lamp_group_control_topic = "lamp/group/control";
     
 };
