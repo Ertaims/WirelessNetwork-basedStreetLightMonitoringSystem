@@ -36,9 +36,13 @@ int main(void)
     ESP8266_SetMessageCallback(handle_mqtt_message);
 
     MQTT_Subscribe("lamp/control/+", 1);
+	MQTT_Subscribe("lamp/status/+", 1);
 
     MQTT_Publish("lamp/control/lamp_001", "{\\\"command\\\":\\\"switch\\\"\\,\\\"value\\\":\\\"on\\\"\\,\\\"group\\\":\\\"A\\\"\\,\\\"lamp_id\\\":\\\"lamp_001\\\"\\,\\\"timestamp\\\":\\\"2017-01-01T00:00:00.000Z\\\"}", 1);
-    
+    // json数据过长，在话题不变的情况下，json部分最大为2000个字节
+    //MQTT_Publish("lamp/status/lamp_001", "{\\\"group\\\":\\\"A\\\"\\,\\\"lamp_id\\\":\\\"lamp_001\\\"\\,\\\"online\\\":true\\,\\\"status\\\":{\\\"switch\\\":\\\"on\\\"\\,\\\"brightness\\\":80\\,\\\"current\\\":0.45\\,\\\"voltage\\\":219.5\\}\\,\\\"fault\\\":{\\\"code\\\":0\\,\\\"message\\\":\\\"None\\\"\\}\\,\\\"timestamp\\\":\\\"2023-10-27T14:30:00Z\\\"}",1);
+
+
 	while(1)
 	{
         if(usart2_rx_flag)

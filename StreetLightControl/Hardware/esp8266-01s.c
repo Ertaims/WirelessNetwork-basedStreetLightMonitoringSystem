@@ -186,19 +186,21 @@ void ESP8266_ProcessReceivedMessage(void)
         int payload_length;
 
         // 提取参数
-        if(sscanf(response_str, "+MQTTSUBRECV:%*d,\"%[^\"]\",%d,{%299[^}]", mqtt_topic_buffer, &payload_length, mqtt_payload_buffer) == 3)
+        if(sscanf(response_str, "+MQTTSUBRECV:%*d,\"%[^\"]\",%d,", mqtt_topic_buffer, &payload_length) == 2)
         {
-            // 创建完整的JSON字符串
-            snprintf(full_json, sizeof(full_json), "{%s}", mqtt_payload_buffer); 
+            // 定位JSON内容起始位置（即第一个'{'字符）
+            char* json_start = strchr(strstr(response_str, "\",") + 2, '{');
+
+            my_printf(USART1, "完整JSON内容: %s\n", json_start);
 
             my_printf(USART1, "接收到MQTT消息:\r\n");
             my_printf(USART1, "Topic: %s\r\n", mqtt_topic_buffer);
-            my_printf(USART1, "Payload: %s\r\n", full_json);
+            my_printf(USART1, "Payload: %s\r\n", json_start);
 
             // 调用回调函数处理消息
             if (MQTT_MessageCallback != NULL)
             {
-                MQTT_MessageCallback(mqtt_topic_buffer, full_json);
+                MQTT_MessageCallback(mqtt_topic_buffer, json_start);
             }
         }
     }

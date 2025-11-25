@@ -114,9 +114,11 @@ int parse_status_command(const char* json_str)
 {
     cJSON *root = cJSON_Parse(json_str);
     
-    if (root == NULL) {
+    if (root == NULL) 
+    {
         const char *error_ptr = cJSON_GetErrorPtr();
-        if (error_ptr != NULL) {
+        if (error_ptr != NULL) 
+        {
             my_printf(USART1, "Error before: %s\r\n", error_ptr);
         }
         return -1;
@@ -133,7 +135,8 @@ int parse_status_command(const char* json_str)
      // 检查必需字段
     if (!cJSON_IsString(group) || !cJSON_IsString(lamp_id) || 
         !cJSON_IsBool(online) || !cJSON_IsObject(status) || 
-        !cJSON_IsObject(fault) || !cJSON_IsString(timestamp)) {
+        !cJSON_IsObject(fault) || !cJSON_IsString(timestamp)) 
+    {
         my_printf(USART1, "Invalid status command format\r\n");
         cJSON_Delete(root);
         return -1;
@@ -146,7 +149,8 @@ int parse_status_command(const char* json_str)
     cJSON *voltage = cJSON_GetObjectItemCaseSensitive(status, "voltage");
 
     if (!cJSON_IsString(switch_status) || !cJSON_IsNumber(brightness) ||
-        !cJSON_IsNumber(current) || !cJSON_IsNumber(voltage)) {
+        !cJSON_IsNumber(current) || !cJSON_IsNumber(voltage)) 
+    {
         my_printf(USART1, "Invalid status object format\r\n");
         cJSON_Delete(root);
         return -1;
@@ -156,7 +160,8 @@ int parse_status_command(const char* json_str)
     cJSON *code = cJSON_GetObjectItemCaseSensitive(fault, "code");
     cJSON *message = cJSON_GetObjectItemCaseSensitive(fault, "message");
 
-    if (!cJSON_IsNumber(code) || !cJSON_IsString(message)) {
+    if (!cJSON_IsNumber(code) || !cJSON_IsString(message)) 
+    {
         my_printf(USART1, "Invalid fault object format\r\n");
         cJSON_Delete(root);
         return -1;
