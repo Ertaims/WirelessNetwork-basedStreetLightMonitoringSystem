@@ -20,11 +20,11 @@ int main() {
     
     std::cout << "======= 开始测试路灯控制 =======" << std::endl;
     // 模拟控制命令
-    lampMonitor.controlLamp("lamp_001", "ON", 80);
+    lampMonitor.controlLamp("switch", "ON", 'A', "lamp_001", 100);
     std::this_thread::sleep_for(std::chrono::seconds(2));
     std::cout << "===============================" << std::endl;
     
-    lampMonitor.controlLamp("lamp_002", "ON");
+    lampMonitor.controlLamp("switch", "OFF", 'A', "lamp_002");
     std::this_thread::sleep_for(std::chrono::seconds(2));
 
     // lampMonitor.controlLamp("lamp_001", "OFF");

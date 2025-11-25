@@ -1,7 +1,9 @@
 CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.o: \
- /home/cxk/backEnd/src/core/LampMonitor.cpp /usr/include/stdc-predef.h \
- /home/cxk/backEnd/src/core/LampMonitor.h \
- /home/cxk/backEnd/src/mqtt/MQTTClientCpp.h /usr/include/c++/11/iostream \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/core/LampMonitor.cpp \
+ /usr/include/stdc-predef.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/core/LampMonitor.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/mqtt/MQTTClientCpp.h \
+ /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \

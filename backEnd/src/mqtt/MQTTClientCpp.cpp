@@ -1,5 +1,7 @@
 #include "MQTTClientCpp.h"
 
+extern std::mutex g_cout_mutex; // 引用全局互斥锁
+
 MQTTClientCpp::MQTTClientCpp(const std::string& server_address, const std::string& client_id)
     : client(server_address, client_id), client_id(client_id)
 {   
@@ -119,16 +121,19 @@ void MQTTClientCpp::setMessageCallback(MessageCallback callback)
 /******************************************************************************************/
 void MQTTClientCpp::connected(const std::string &cause)
 {
+    std::lock_guard<std::mutex> lock(g_cout_mutex);
     std::cout << "已连接到EMQX服务器. 原因: " << cause << std::endl;
 }
 
 void MQTTClientCpp::connection_lost(const std::string &cause)
 {
+    std::lock_guard<std::mutex> lock(g_cout_mutex);
     std::cerr << "与EMQX服务器的连接丢失. 原因: " << cause << std::endl;
 }
 
 void MQTTClientCpp::delivery_complete(mqtt::delivery_token_ptr tok)
 {
+    std::lock_guard<std::mutex> lock(g_cout_mutex);
     std::cout << "消息投递完成. 令牌ID: " << (tok ? tok->get_message_id() : -1) << std::endl;
 }
 
