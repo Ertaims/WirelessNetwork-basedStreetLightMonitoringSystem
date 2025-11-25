@@ -31,5 +31,8 @@
 .\objects\esp8266-01s.o: Hardware\esp8266-01s.h
 .\objects\esp8266-01s.o: Hardware\Serial.h
 .\objects\esp8266-01s.o: D:\qianrushi\MDK\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\esp8266-01s.o: .\System\delay.h
+.\objects\esp8266-01s.o: .\System\Delay.h
+.\objects\esp8266-01s.o: .\Json\Json_parser.h
+.\objects\esp8266-01s.o: .\Library\cJSON.h
+.\objects\esp8266-01s.o: D:\qianrushi\MDK\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\esp8266-01s.o: D:\qianrushi\MDK\ARM\ARMCC\Bin\..\include\string.h

@@ -2,17 +2,18 @@
 #define __SERIAL_H__ 
 
 #include <stdio.h>
+#include "stm32f10x.h"  // Device header
 
-#define RX_BUFFER_SIZE 1024
+#define RX_BUFFER_SIZE 2048
 #define USART_BUFF_SIZE 1024
 
 // USART1 接收缓冲区
-extern uint8_t usart1_rx_buffer[500];
+extern uint8_t usart1_rx_buffer[RX_BUFFER_SIZE];
 extern unsigned int usart1_rx_index;
 extern uint8_t usart1_rx_flag;
 
 // USART2 接收缓冲区
-extern char usart2_rx_buffer[500];
+extern uint8_t usart2_rx_buffer[RX_BUFFER_SIZE];
 extern unsigned int usart2_rx_index;
 extern uint8_t usart2_rx_flag;
 

@@ -1,7 +1,3 @@
-#include "stm32f10x.h"  // Device header
-#include "Delay.h"
-#include "OLED.h"
-//#include "PWM.h"
 #include "esp8266-01s.h"
 
 
@@ -23,15 +19,38 @@
 *********************************************************************************/
 int main(void)
 {
-	// PWM_Init();
+    // PWM_Init();
 	Delay_ms(1000);
 
-	// ESP8266_Init();
+	ESP8266_Init();
 	
-	// while(ESP8266_ConnectMQTT())
+	while(ESP8266_ConnectMQTT())
+    {
+        my_printf(USART1, "Failed to connect to MQTT, retrying...\r\n");
+        Delay_ms(5000); // 等待5秒后重试
+    }
+
+    Delay_ms(500);
+
+    // 设置消息回调函数
+    ESP8266_SetMessageCallback(handle_mqtt_message);
+
+    MQTT_Subscribe("lamp/control/+", 1);
+	MQTT_Subscribe("lamp/status/+", 1);
+
+    MQTT_Publish("lamp/control/lamp_001", "{\\\"command\\\":\\\"switch\\\"\\,\\\"value\\\":\\\"on\\\"\\,\\\"group\\\":\\\"A\\\"\\,\\\"lamp_id\\\":\\\"lamp_001\\\"\\,\\\"timestamp\\\":\\\"2017-01-01T00:00:00.000Z\\\"}", 1);
+    // 在话题不变的情况下，json部分最大为2000个字节
+    //MQTT_Publish("lamp/status/lamp_001", "{\\\"group\\\":\\\"A\\\"\\,\\\"lamp_id\\\":\\\"lamp_001\\\"\\,\\\"online\\\":true\\,\\\"status\\\":{\\\"switch\\\":\\\"on\\\"\\,\\\"brightness\\\":80\\,\\\"current\\\":0.45\\,\\\"voltage\\\":219.5\\}\\,\\\"fault_code\\\":0\\,\\\"timestamp\\\":\\\"2023-10-27T14:30:00Z\\\"}",1);
+
 
 	while(1)
 	{
-		
+        if(usart2_rx_flag)
+        {
+            ESP8266_ProcessReceivedMessage();
+            usart2_rx_flag = 0;
+			//MQTT_Publish("lamp/control/lamp_002", "{\\\"command\\\":\\\"switch\\\"\\,\\\"value\\\":\\\"off\\\"\\,\\\"group\\\":\\\"A\\\"\\,\\\"lamp_id\\\":\\\"lamp_002\\\"\\,\\\"timestamp\\\":\\\"2017-01-01T00:00:00.000Z\\\"}", 1);
+        }
+        Delay_ms(1000);
 	}
 }

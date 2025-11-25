@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware</IncludePath>
+              <IncludePath>.\Start;.\User;.\Library;.\System;.\Hardware;.\Json</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -644,6 +644,16 @@
               <FileType>5</FileType>
               <FilePath>.\Library\stm32f10x_wwdg.h</FilePath>
             </File>
+            <File>
+              <FileName>cJSON.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Library\cJSON.c</FilePath>
+            </File>
+            <File>
+              <FileName>cJSON.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Library\cJSON.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -763,6 +773,21 @@
               <FileName>stm32f10x_it.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f10x_it.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Json</GroupName>
+          <Files>
+            <File>
+              <FileName>Json_parser.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Json\Json_parser.c</FilePath>
+            </File>
+            <File>
+              <FileName>Json_parser.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Json\Json_parser.h</FilePath>
             </File>
           </Files>
         </Group>

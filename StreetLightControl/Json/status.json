@@ -1,0 +1,13 @@
+{
+  "group": "A",
+  "lamp_id": "lamp_001",
+  "online": true,
+  "status": {
+    "switch": "on",
+    "brightness": 80,
+    "current": 0.45,
+    "voltage": 219.5
+  },
+  "fault_code": 0,
+  "timestamp": "2023-10-27T14:30:00Z"
+}

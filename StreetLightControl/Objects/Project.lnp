@@ -25,6 +25,7 @@
 ".\objects\stm32f10x_tim.o"
 ".\objects\stm32f10x_usart.o"
 ".\objects\stm32f10x_wwdg.o"
+".\objects\cjson.o"
 ".\objects\delay.o"
 ".\objects\led.o"
 ".\objects\key.o"
@@ -32,8 +33,10 @@
 ".\objects\pwm.o"
 ".\objects\serial.o"
 ".\objects\esp8266-01s.o"
+".\objects\lightsensor.o"
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"
+".\objects\json_parser.o"
 --strict --scatter ".\Objects\Project.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

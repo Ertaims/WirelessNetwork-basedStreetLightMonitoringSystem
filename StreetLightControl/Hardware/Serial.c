@@ -5,12 +5,12 @@
 #include <string.h>
 
 // USART1 接收缓冲区
-uint8_t usart1_rx_buffer[500];
+uint8_t usart1_rx_buffer[RX_BUFFER_SIZE];
 unsigned int usart1_rx_index = 0;
 uint8_t usart1_rx_flag = 0;
 
 // USART2 接收缓冲区
-char usart2_rx_buffer[500];
+uint8_t usart2_rx_buffer[RX_BUFFER_SIZE];
 unsigned int usart2_rx_index = 0;
 uint8_t usart2_rx_flag = 0;
 
@@ -197,8 +197,19 @@ void USART1_IRQHandler(void)
 {
     if(USART_GetITStatus(USART1, USART_IT_RXNE))
     {
-        Usart_Receive_Buff[usart1_rx_index++] = USART_ReceiveData(USART1);//保存接受到的数据
         USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+
+        if(usart1_rx_index < RX_BUFFER_SIZE) // 边界检查
+        {
+            usart1_rx_buffer[usart1_rx_index] = USART_ReceiveData(USART1);//保存接受到的数据
+            usart1_rx_index++;
+        }
+        else
+        {
+            //缓冲区溢出，重置索引
+            usart1_rx_index = 0;
+            memset(usart1_rx_buffer, 0, RX_BUFFER_SIZE);
+        }
     }
     if(USART_GetITStatus(USART1, USART_IT_IDLE))
     {
@@ -206,7 +217,6 @@ void USART1_IRQHandler(void)
         USART1->DR;
         usart1_rx_flag = 1;//表示接受完成
         usart1_rx_index = 0;
-
     }
 }
 
@@ -217,17 +227,27 @@ void USART1_IRQHandler(void)
  */
 void USART2_IRQHandler(void)
 {
-    if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)   //如果USART_IT_RXNE标志置位，表示有数据到了，进入if分支
+    if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)       //如果USART_IT_RXNE标志置位，表示有数据到了，进入if分支
     {
         USART_ClearITPendingBit(USART2, USART_IT_RXNE);
-        usart2_rx_buffer[usart2_rx_index] =  USART2->DR; //保存到缓冲区
-        usart2_rx_index ++;                        //每接收1个字节的数据，Usart2_RxCounter加1，表示接收的数据总量+1			
+        // 边界检查
+        if(usart2_rx_index < RX_BUFFER_SIZE)
+        {
+            usart2_rx_buffer[usart2_rx_index] =  USART_ReceiveData(USART2);
+            usart2_rx_index++;                                 //每接收1个字节的数据，Usart2_RxCounter加1，表示接收的数据总量+1			
+        }
+        else
+        {
+            //缓冲区溢出，重置索引
+            usart2_rx_index = 0;
+            memset(usart2_rx_buffer, 0, RX_BUFFER_SIZE);
+        }
     }
     if(USART_GetITStatus(USART2, USART_IT_IDLE) != RESET)
     {
-        usart2_rx_flag = 1;//接收完成
-        USART2->SR;                                                    //清除USART_IT_IDLE标志  步骤1
-        USART2->DR;                                                    //清除USART_IT_IDLE标志  步骤2
+        usart2_rx_flag = 1;                                      //接收完成
+        USART2->SR;                                              //清除USART_IT_IDLE标志  步骤1
+        USART2->DR;                                              //清除USART_IT_IDLE标志  步骤2
 		usart2_rx_index=0;
     }
 }
