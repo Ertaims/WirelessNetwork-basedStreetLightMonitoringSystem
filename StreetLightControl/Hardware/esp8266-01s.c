@@ -164,8 +164,7 @@ void MQTT_Publish(char* topic, char* payload, uint8_t qos)
 
 // 全局变量用于存储接收到的消息
 char mqtt_topic_buffer[128];
-char mqtt_payload_buffer[1024];
-char full_json[1024];
+char mqtt_payload_buffer[2048];
 
 // MQTT消息回调函数指针
 void (*MQTT_MessageCallback)(char* topic, char* payload) = NULL;
@@ -178,6 +177,14 @@ void (*MQTT_MessageCallback)(char* topic, char* payload) = NULL;
 void ESP8266_ProcessReceivedMessage(void)
 {
     char* response_str = (char*)usart2_rx_buffer;
+
+    // 添加长度检查
+    if(strlen(response_str) > sizeof(usart2_rx_buffer))
+    {
+        my_printf(USART1, "接收到的消息长度过长，请检查!\r\n");
+        return;
+    }
+
     my_printf(USART1, "接收到MQTT消息:\r\n%s\r\n", response_str);
     // 查找MQTT接收消息的标识 "+MQTTSUBRECV"
     if (strstr(response_str, "+MQTTSUBRECV:") != NULL)
@@ -204,6 +211,7 @@ void ESP8266_ProcessReceivedMessage(void)
             }
         }
     }
+    memset(usart2_rx_buffer, 0, sizeof(usart2_rx_buffer));
 }
 
 /**

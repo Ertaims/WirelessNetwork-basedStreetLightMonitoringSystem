@@ -8,9 +8,6 @@
     "current": 0.45,
     "voltage": 219.5
   },
-  "fault": {
-    "code": 0,
-    "message": "None"
-  },
+  "fault_code": 0,
   "timestamp": "2023-10-27T14:30:00Z"
 }

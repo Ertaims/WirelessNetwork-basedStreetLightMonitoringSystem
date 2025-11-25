@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "stm32f10x.h"  // Device header
 
-#define RX_BUFFER_SIZE 1024
+#define RX_BUFFER_SIZE 2048
 #define USART_BUFF_SIZE 1024
 
 // USART1 Ω” ’ª∫≥Â«¯
