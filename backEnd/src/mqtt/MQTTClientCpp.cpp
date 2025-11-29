@@ -67,7 +67,6 @@ void MQTTClientCpp::disconnect()
     {
         std::cerr << "断开连接时出错: " << e.what() << std::endl;
     }
-    
 }
 
 bool MQTTClientCpp::publish(const std::string& topic, const std::string& payload, int qos)

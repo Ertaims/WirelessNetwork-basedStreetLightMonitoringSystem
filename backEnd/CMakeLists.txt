@@ -8,9 +8,24 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # 自动包含当前目录和src目录
 include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src/http)
 
 # 查找依赖包
 find_package(PkgConfig REQUIRED)
+find_package(OpenSSL REQUIRED)
+
+# 查找MySQL客户端库
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(MYSQLCLIENT REQUIRED mysqlclient)
+
+# 查找并链接 fmt 库
+find_package(fmt REQUIRED)
+
+# 查找 httplib库
+find_path(HTTPLIB_INCLUDE_DIRS
+    NAMES httplib.h
+    PATHS /usr/include /usr/local/include
+)
 
 # 查找 Paho MQTT C 库
 find_path(PAHO_MQTT_C_INCLUDE_DIRS
@@ -77,15 +92,29 @@ if(NOT PAHO_MQTT_CPP_LIBRARIES)
     endif()
 endif()
 
+if(NOT HTTPLIB_INCLUDE_DIRS)
+    message(WARNING "httplib library not found, trying to find package...")
+    find_package(httplib QUIET)
+    if(httplib_FOUND)
+        set(HTTPLIB_INCLUDE_DIRS httplib::httplib)
+        message(STATUS "Found httplib via package config")
+    else()
+        message()
+    endif()
+endif()
+
 message(STATUS "Found Paho MQTT C: ${PAHO_MQTT_C_LIBRARIES}")
 message(STATUS "Found Paho MQTT C++: ${PAHO_MQTT_CPP_LIBRARIES}")
+message(STATUS "Found OpenSSL: ${OPENSSL_INCLUDE_DIR}")
+message(STATUS "Found HTTPLIB: ${HTTPLIB_INCLUDE_DIRS}")
+message(STATUS "Found MySQL: ${MYSQLCLIENT_INCLUDE_DIRS}")
+
+# 递归查找所有源文件
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/**/*.cpp")
+file(GLOB_RECURSE HEADERS "src/*.h" "src/**/*.h")
 
 # 添加可执行文件
-add_executable(${PROJECT_NAME}
-    src/main.cpp
-    src/mqtt/MQTTClientCpp.cpp
-    src/core/LampMonitor.cpp
-)
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 # 设置目标包含目录
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -93,6 +122,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${PAHO_MQTT_C_INCLUDE_DIRS}
     ${PAHO_MQTT_CPP_INCLUDE_DIRS}
     ${JSON_INCLUDE_DIR}
+    ${HTTPLIB_INCLUDE_DIRS}
+    ${MYSQLCLIENT_INCLUDE_DIRS}
 )
 
 # 链接库
@@ -100,6 +131,10 @@ target_link_libraries(${PROJECT_NAME}
     ${PAHO_MQTT_CPP_LIBRARIES}
     ${PAHO_MQTT_C_LIBRARIES}
     Threads::Threads
+    OpenSSL::SSL
+    OpenSSL::Crypto
+    fmt::fmt
+    ${MYSQLCLIENT_LIBRARIES}
 )
 
 # 如果是通过find_package找到的nlohmann_json

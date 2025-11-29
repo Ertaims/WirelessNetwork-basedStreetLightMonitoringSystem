@@ -1,0 +1,18 @@
+{
+    "server": {
+        "port": 8080,
+        "host": "0.0.0.0"
+    },
+    "database": {
+        "host": "10.201.40.164",
+        "port": 3306,
+        "username": "root",
+        "password": "123456",
+        "database": "streetlight_db"
+    },
+    "mqtt": {
+        "broker_address": "tcp://localhost:1883",
+        "client_id": "streetlight_backend"
+    },
+    "log_level": "INFO"
+}

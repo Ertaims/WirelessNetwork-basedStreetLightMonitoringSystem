@@ -68,7 +68,9 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "csignal": "cpp",
+        "regex": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/g++-11"
 }
