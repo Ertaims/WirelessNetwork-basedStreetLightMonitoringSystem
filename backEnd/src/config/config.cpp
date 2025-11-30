@@ -27,6 +27,8 @@ Config::Config() {
             {"broker_address", "tcp://localhost:1883"},
             {"client_id", "streetlight_backend"}
         }},
+        {"secret_key", "X020PgUKU41P9XtxAaHHwuGHSCPJsuALldHCmRd7saY"},
+        {"tokenExpirationTime", 86400},
         {"log_level", "INFO"}
     };
 }
@@ -86,6 +88,14 @@ std::string Config::getMqttBrokerAddress() const {
 
 std::string Config::getMqttClientId() const {
     return config_data["mqtt"]["client_id"];
+}
+
+std::string Config::getSecretKey() const {
+    return config_data["secret_key"];
+}
+
+int Config::getTokenExpirationTime() const {
+    return config_data["tokenExpirationTime"];
 }
 
 std::string Config::getLogLevel() const {

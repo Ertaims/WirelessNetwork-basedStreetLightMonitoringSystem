@@ -14,5 +14,7 @@
         "broker_address": "tcp://localhost:1883",
         "client_id": "streetlight_backend"
     },
+    "secret_key": "X020PgUKU41P9XtxAaHHwuGHSCPJsuALldHCmRd7saY=",
+    "tokenExpirationTime": 86400,
     "log_level": "INFO"
 }

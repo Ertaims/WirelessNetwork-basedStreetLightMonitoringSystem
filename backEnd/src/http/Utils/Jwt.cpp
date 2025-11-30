@@ -5,6 +5,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <nlohmann/json.hpp>
+#include <spdlog/spdlog.h>
 
 Jwt::Jwt(const std::string& secret) : secretKey(secret) {}
 
@@ -113,7 +114,13 @@ std::map<std::string, std::string> Jwt::extractClaims(const std::string& token) 
         // 转换为map
         std::map<std::string, std::string> claims;
         for (auto& [key, value] : json.items()) {
-            claims[key] = value.dump();
+            if (value.is_string()) {
+                claims[key] = value.get<std::string>();
+            } else if (value.is_number()) {
+                claims[key] = std::to_string(value.get<long long>());
+            } else {
+                claims[key] = value.dump();
+            }
         }
         
         return claims;
@@ -212,6 +219,8 @@ std::string Jwt::base64Decode(const std::string& input) {
     bio = BIO_new_mem_buf(paddedInput.data(), paddedInput.size());
     b64 = BIO_new(BIO_f_base64());
     bio = BIO_push(b64, bio);
+    
+    BIO_set_flags(bio, BIO_FLAGS_BASE64_NO_NL); // 不处理换行符
     
     while ((length = BIO_read(bio, buffer, sizeof(buffer))) > 0) {
         result.append(buffer, length);

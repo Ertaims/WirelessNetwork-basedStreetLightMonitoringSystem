@@ -7,21 +7,21 @@
 AuthHandler::AuthHandler() {}
 
 void AuthHandler::registerRoutes(httplib::Server& svr)
-{ 
-    svr.Post("/auth/login", [this](const httplib::Request& req, httplib::Response& res)
+{
+    svr.Post("/api/auth/login", [this](const httplib::Request& req, httplib::Response& res)
     {
         this->handleLogin(req, res);
     });
 
-    svr.Post("/auth/logout", [this](const httplib::Request& req, httplib::Response& res) {
+    svr.Post("/api/auth/logout", [this](const httplib::Request& req, httplib::Response& res) {
         this->handleLogout(req, res);
     });
     
-    svr.Post("/auth/refresh", [this](const httplib::Request& req, httplib::Response& res) {
+    svr.Post("/api/auth/refresh", [this](const httplib::Request& req, httplib::Response& res) {
         this->handleRefreshToken(req, res);
     });
     
-    svr.Get("/auth/profile", [this](const httplib::Request& req, httplib::Response& res) {
+    svr.Get("/api/auth/profile", [this](const httplib::Request& req, httplib::Response& res) {
         this->handleGetProfile(req, res);
     });
 }
@@ -30,12 +30,17 @@ void AuthHandler::handleLogin(const httplib::Request& req, httplib::Response& re
 { 
     try
     {
+        spdlog::info("收到登录请求，路径: {}", req.path);
+        spdlog::info("请求体: {}", req.body);
+
         // 解析请求参数
         auto jsonData = JsonParser::parse(req.body);
+        spdlog::info("解析JSON成功");
 
         // 验证参数
         if(!jsonData.contains("username") || !jsonData.contains("password"))
         {
+            spdlog::warn("缺少用户名或密码");
             res.status = Constants::RESPONSE_BAD_REQUEST;
             res.set_content(R"({"error": "缺少用户名或密码"})", "application/json");
             return;
@@ -43,15 +48,19 @@ void AuthHandler::handleLogin(const httplib::Request& req, httplib::Response& re
 
         std::string username = jsonData["username"];
         std::string password = jsonData["password"];
+        spdlog::info("用户名: {}, 密码: {}", username, password);
 
         // 调用认证服务进行登录验证
         auto [success, message] = authService.login(username, password);
+        spdlog::info("登录验证结果: {}, 消息: {}", success, message);
 
         if(success)
         {
             // 生成Jwt令牌
             auto user = authService.getUserByUsername(username); 
+            spdlog::info("获取用户成功");
             std::string token = authService.generateJwtToken(*user);
+            spdlog::info("生成令牌成功: {}", token);
 
             // 构建成功响应
             nlohmann::json response;
@@ -65,9 +74,11 @@ void AuthHandler::handleLogin(const httplib::Request& req, httplib::Response& re
 
             res.status = Constants::RESPONSE_SUCCESS;
             res.set_content(JsonParser::serialize(response), "application/json");
+            spdlog::info("登录成功，返回响应");
         }
         else
         {
+            spdlog::warn("登录失败: {}", message);
             res.status = Constants::RESPONSE_UNAUTHORIZED;
             nlohmann::json response;
             response["error"] = message;
@@ -131,9 +142,12 @@ void AuthHandler::handleGetProfile(const httplib::Request& req, httplib::Respons
 {
     try
     {
+        spdlog::info("收到获取用户信息请求，路径: {}", req.path);
+        spdlog::info("请求体: {}", req.body);
         // 验证令牌
         if(!AuthMiddleware::validateToken(req))
         {
+            spdlog::warn("令牌验证失败");
             res.status = Constants::RESPONSE_UNAUTHORIZED;
             res.set_content(R"({"error": "未授权访问"})", "application/json");
             return;

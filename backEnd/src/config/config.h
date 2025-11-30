@@ -32,6 +32,8 @@ public:
     std::string getDatabaseName() const;
     std::string getMqttBrokerAddress() const;
     std::string getMqttClientId() const;
+    std::string getSecretKey() const;
+    int getTokenExpirationTime() const;
     std::string getLogLevel() const;
 };
 

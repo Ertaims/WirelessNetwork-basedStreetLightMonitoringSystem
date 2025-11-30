@@ -1,10 +1,17 @@
 #include "AuthService.h"
 #include "Utils/Jwt.h"
 #include "Utils/Constants.h"
+#include "config/config.h"
 #include <spdlog/spdlog.h>
 #include <chrono>
 
-AuthService::AuthService() {};
+AuthService::AuthService() 
+{
+    // 从配置文件中读取jwtSecret和tokenExpirationTime
+    Config& config = Config::getInstance();
+    jwtSecret = config.getSecretKey();
+    tokenExpirationTime = config.getTokenExpirationTime();
+};
 
 auto AuthService::login(const std::string &username, const std::string &password)
 -> std::pair<bool, std::string>

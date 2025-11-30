@@ -66,6 +66,12 @@ int main() {
     AuthHandler authHandler;
     authHandler.registerRoutes(svr);
 
+    // 测试路由
+    svr.Get("/test", [](const httplib::Request& req, httplib::Response& res) {
+        res.status = 200;
+        res.set_content(R"({"message": "测试成功"})", "application/json");
+    });
+
     // 认证中间件应用于需要保护的路由组
     svr.Post("/api/protected", [](const httplib::Request& req, httplib::Response& res) {
         if (!AuthMiddleware::validateToken(req)) {

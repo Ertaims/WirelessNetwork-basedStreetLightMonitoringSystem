@@ -1,6 +1,7 @@
 #include "AuthMiddleware.h"
 #include "Utils/Jwt.h"
 #include "Utils/Constants.h"
+#include <spdlog/spdlog.h>
 
 AuthService AuthMiddleware::authService;
 
