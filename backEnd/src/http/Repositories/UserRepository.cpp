@@ -89,36 +89,75 @@ bool UserRepository::createUser(const User &user)
         // 绑定参数
         MYSQL_BIND bind[6];
         memset(bind, 0, sizeof(bind));
+        
+        // 存储字符串长度
+        unsigned long lengths[6];
+        
+        // 为每个字符串创建足够大的缓冲区
+        char usernameBuffer[256];
+        char passwordBuffer[256];
+        char nameBuffer[256];
+        char roleBuffer[256];
+        char emailBuffer[256];
+        char phoneBuffer[256];
+        
+        // 复制字符串到缓冲区
+        strncpy(usernameBuffer, user.getUsername().c_str(), sizeof(usernameBuffer) - 1);
+        strncpy(passwordBuffer, user.getPasswordHash().c_str(), sizeof(passwordBuffer) - 1);
+        strncpy(nameBuffer, user.getName().c_str(), sizeof(nameBuffer) - 1);
+        strncpy(roleBuffer, user.getRole().c_str(), sizeof(roleBuffer) - 1);
+        strncpy(emailBuffer, user.getEmail().c_str(), sizeof(emailBuffer) - 1);
+        strncpy(phoneBuffer, user.getPhone().c_str(), sizeof(phoneBuffer) - 1);
+        
+        // 确保字符串以null结尾
+        usernameBuffer[sizeof(usernameBuffer) - 1] = '\0';
+        passwordBuffer[sizeof(passwordBuffer) - 1] = '\0';
+        nameBuffer[sizeof(nameBuffer) - 1] = '\0';
+        roleBuffer[sizeof(roleBuffer) - 1] = '\0';
+        emailBuffer[sizeof(emailBuffer) - 1] = '\0';
+        phoneBuffer[sizeof(phoneBuffer) - 1] = '\0';
 
         // username
         bind[0].buffer_type = MYSQL_TYPE_STRING;
-        bind[0].buffer = (char*)user.getUsername().c_str();
-        bind[0].buffer_length = user.getUsername().length();
+        bind[0].buffer = usernameBuffer;
+        bind[0].buffer_length = sizeof(usernameBuffer);
+        bind[0].length = &lengths[0];
+        lengths[0] = user.getUsername().length();
 
         // password
         bind[1].buffer_type = MYSQL_TYPE_STRING;
-        bind[1].buffer = (char*)user.getPasswordHash().c_str();
-        bind[1].buffer_length = user.getPasswordHash().length();
+        bind[1].buffer = passwordBuffer;
+        bind[1].buffer_length = sizeof(passwordBuffer);
+        bind[1].length = &lengths[1];
+        lengths[1] = user.getPasswordHash().length();
 
         // name
         bind[2].buffer_type = MYSQL_TYPE_STRING;
-        bind[2].buffer = (char*)user.getName().c_str();
-        bind[2].buffer_length = user.getName().length();
+        bind[2].buffer = nameBuffer;
+        bind[2].buffer_length = sizeof(nameBuffer);
+        bind[2].length = &lengths[2];
+        lengths[2] = user.getName().length();
 
         // role
         bind[3].buffer_type = MYSQL_TYPE_STRING;
-        bind[3].buffer = (char*)user.getRole().c_str();
-        bind[3].buffer_length = user.getRole().length();
+        bind[3].buffer = roleBuffer;
+        bind[3].buffer_length = sizeof(roleBuffer);
+        bind[3].length = &lengths[3];
+        lengths[3] = user.getRole().length();
 
         // email
         bind[4].buffer_type = MYSQL_TYPE_STRING;
-        bind[4].buffer = (char*)user.getEmail().c_str();
-        bind[4].buffer_length = user.getEmail().length();
+        bind[4].buffer = emailBuffer;
+        bind[4].buffer_length = sizeof(emailBuffer);
+        bind[4].length = &lengths[4];
+        lengths[4] = user.getEmail().length();
 
         // phone
         bind[5].buffer_type = MYSQL_TYPE_STRING;
-        bind[5].buffer = (char*)user.getPhone().c_str();
-        bind[5].buffer_length = user.getPhone().length();
+        bind[5].buffer = phoneBuffer;
+        bind[5].buffer_length = sizeof(phoneBuffer);
+        bind[5].length = &lengths[5];
+        lengths[5] = user.getPhone().length();
 
         if (mysql_stmt_bind_param(stmt, bind) != 0) {
             std::string error = mysql_stmt_error(stmt);

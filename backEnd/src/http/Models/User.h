@@ -6,7 +6,7 @@
 class User {
 public:
     User();
-    User(const std::string& username, const std::string& passwordHash, const std::string& role);
+    User(const std::string& username, const std::string& passwordHash, const std::string& role, const std::string& name, const std::string& email, const std::string& phone);
     
     // Getters and Setters
     int getId() const; 

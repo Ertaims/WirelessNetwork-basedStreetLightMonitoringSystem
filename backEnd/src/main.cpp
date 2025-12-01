@@ -66,21 +66,30 @@ int main() {
     AuthHandler authHandler;
     authHandler.registerRoutes(svr);
 
-    // 测试路由
-    svr.Get("/test", [](const httplib::Request& req, httplib::Response& res) {
-        res.status = 200;
-        res.set_content(R"({"message": "测试成功"})", "application/json");
-    });
-
-    // 认证中间件应用于需要保护的路由组
-    svr.Post("/api/protected", [](const httplib::Request& req, httplib::Response& res) {
-        if (!AuthMiddleware::validateToken(req)) {
-            res.status = 401;
-            res.set_content(R"({"error": "未授权访问"})", "application/json");
-            return;
-        }
-        res.set_content(R"({"message": "访问成功"})", "application/json");
-    });
+    UserRepository userRepository;
+    
+    // 先尝试获取并删除现有用户
+    auto existingUser = userRepository.getUserByUsername("user");
+    if (existingUser) {
+        userRepository.deleteUser(existingUser->getId());
+    }
+    existingUser = userRepository.getUserByUsername("admin");
+    if (existingUser) {
+        userRepository.deleteUser(existingUser->getId());
+    }
+    existingUser = userRepository.getUserByUsername("viewer");
+    if (existingUser) {
+        userRepository.deleteUser(existingUser->getId());
+    }
+    
+    // 重新创建用户
+    User user("user", "123456", "OPERATOR", "测试用户", "user@example.com", "user123456");
+    User admin("admin", "123456", "ADMIN", "管理员", "admin@example.com", "admin123456");
+    User viewer("viewer", "123456", "VIEWER", "浏览者", "viewer@example.com", "viewer123456");
+    
+    userRepository.createUser(user);
+    userRepository.createUser(admin);
+    userRepository.createUser(viewer);
 
     // 启动服务器
     int port = 8080;

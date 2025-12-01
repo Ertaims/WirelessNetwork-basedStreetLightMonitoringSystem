@@ -143,7 +143,6 @@ void AuthHandler::handleGetProfile(const httplib::Request& req, httplib::Respons
     try
     {
         spdlog::info("收到获取用户信息请求，路径: {}", req.path);
-        spdlog::info("请求体: {}", req.body);
         // 验证令牌
         if(!AuthMiddleware::validateToken(req))
         {

@@ -7,8 +7,8 @@
 
 User::User() : id(0) {}
 
-User::User(const std::string& username, const std::string& passwordHash, const std::string& role) 
-    : id(0), username(username), passwordHash(passwordHash), role(role) 
+User::User(const std::string& username, const std::string& passwordHash, const std::string& role, const std::string& name, const std::string& email, const std::string& phone) 
+    : id(0), username(username), name(name), role(role), email(email), phone(phone)
 {
     // 设置创建时间
     auto now = std::chrono::system_clock::now();                        // 获取当前时间点
@@ -17,6 +17,8 @@ User::User(const std::string& username, const std::string& passwordHash, const s
     std::ostringstream oss;                                             // 创建字符串流
     oss << std::put_time(now_tm, "%Y-%m-%d %H:%M:%S");                  // 格式化时间
     created_at = oss.str();
+
+    this->passwordHash = PasswordHasher::hashPassword(passwordHash);
 }
 
 int User::getId() const
@@ -43,7 +45,8 @@ std::string User::getPasswordHash() const
 }
 void User::setPasswordHash(const std::string& passwordHash) 
 {
-    this->passwordHash = passwordHash; 
+    // 直接存储哈希值，不再次哈希
+    this->passwordHash = passwordHash;
 }
 
 std::string User::getRole() const 
