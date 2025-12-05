@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "../Models/User.h"
+#include "../Utils/DatabaseConnection.h"
 
 class UserRepository
 {
@@ -30,9 +31,6 @@ public:
     bool deleteUser(int id);
 
 private:
-    // 初始化数据库连接
-    void initDatabase();
-    
-    // 数据库连接句柄
-    void* db;
+    // 数据库连接
+    DatabaseConnection dbConnection;
 };

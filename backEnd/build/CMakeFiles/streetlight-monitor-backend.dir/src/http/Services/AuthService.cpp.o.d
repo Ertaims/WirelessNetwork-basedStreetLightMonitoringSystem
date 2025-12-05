@@ -158,6 +158,24 @@ CMakeFiles/streetlight-monitor-backend.dir/src/http/Services/AuthService.cpp.o: 
  /usr/include/c++/11/bits/stl_bvector.h \
  /usr/include/c++/11/bits/vector.tcc \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Repositories/UserRepository.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Repositories/../Utils/DatabaseConnection.h \
+ /usr/include/mysql/mysql.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
+ /usr/include/mysql/field_types.h /usr/include/mysql/my_list.h \
+ /usr/include/mysql/mysql_com.h /usr/include/mysql/my_command.h \
+ /usr/include/mysql/my_compress.h \
+ /usr/include/mysql/udf_registration_types.h \
+ /usr/include/mysql/client_plugin.h /usr/include/c++/11/stdlib.h \
+ /usr/include/mysql/plugin_auth_common.h \
+ /usr/include/mysql/mysql_version.h /usr/include/mysql/mysql_time.h \
+ /usr/include/mysql/errmsg.h /usr/include/c++/11/mutex \
+ /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
+ /usr/include/c++/11/limits /usr/include/c++/11/ctime \
+ /usr/include/c++/11/bits/parse_numbers.h \
+ /usr/include/c++/11/system_error \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h \
+ /usr/include/c++/11/stdexcept /usr/include/c++/11/bits/std_mutex.h \
+ /usr/include/c++/11/bits/unique_lock.h \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Utils/Jwt.h \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_tree.h \
  /usr/include/c++/11/bits/node_handle.h \
@@ -182,9 +200,7 @@ CMakeFiles/streetlight-monitor-backend.dir/src/http/Services/AuthService.cpp.o: 
  /usr/include/c++/11/streambuf /usr/include/c++/11/bits/ios_base.h \
  /usr/include/c++/11/bits/locale_classes.h \
  /usr/include/c++/11/bits/locale_classes.tcc \
- /usr/include/c++/11/system_error \
- /usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h \
- /usr/include/c++/11/stdexcept /usr/include/c++/11/bits/streambuf.tcc \
+ /usr/include/c++/11/bits/streambuf.tcc \
  /usr/local/include/nlohmann/adl_serializer.hpp \
  /usr/local/include/nlohmann/detail/abi_macros.hpp \
  /usr/local/include/nlohmann/detail/conversions/from_json.hpp \
@@ -200,8 +216,7 @@ CMakeFiles/streetlight-monitor-backend.dir/src/http/Services/AuthService.cpp.o: 
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
- /usr/include/c++/11/bits/specfun.h /usr/include/c++/11/limits \
- /usr/include/c++/11/tr1/gamma.tcc \
+ /usr/include/c++/11/bits/specfun.h /usr/include/c++/11/tr1/gamma.tcc \
  /usr/include/c++/11/tr1/special_function_util.h \
  /usr/include/c++/11/tr1/bessel_function.tcc \
  /usr/include/c++/11/tr1/beta_function.tcc \
@@ -243,8 +258,6 @@ CMakeFiles/streetlight-monitor-backend.dir/src/http/Services/AuthService.cpp.o: 
  /usr/local/include/nlohmann/detail/meta/identity_tag.hpp \
  /usr/local/include/nlohmann/detail/meta/std_fs.hpp \
  /usr/include/c++/11/filesystem /usr/include/c++/11/bits/fs_fwd.h \
- /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
- /usr/include/c++/11/ctime /usr/include/c++/11/bits/parse_numbers.h \
  /usr/include/c++/11/bits/fs_path.h /usr/include/c++/11/locale \
  /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \
  /usr/include/wctype.h /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
@@ -298,9 +311,7 @@ CMakeFiles/streetlight-monitor-backend.dir/src/http/Services/AuthService.cpp.o: 
  /usr/include/c++/11/atomic /usr/include/spdlog/fmt/fmt.h \
  /usr/include/fmt/core.h /usr/include/fmt/format.h \
  /usr/include/fmt/core.h /usr/include/spdlog/common-inl.h \
- /usr/include/spdlog/details/registry.h /usr/include/c++/11/mutex \
- /usr/include/c++/11/bits/std_mutex.h \
- /usr/include/c++/11/bits/unique_lock.h \
+ /usr/include/spdlog/details/registry.h \
  /usr/include/spdlog/details/registry-inl.h \
  /usr/include/spdlog/details/periodic_worker.h \
  /usr/include/c++/11/condition_variable /usr/include/c++/11/thread \

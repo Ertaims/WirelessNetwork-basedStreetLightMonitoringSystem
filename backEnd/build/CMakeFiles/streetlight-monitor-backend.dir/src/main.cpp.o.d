@@ -422,12 +422,28 @@ CMakeFiles/streetlight-monitor-backend.dir/src/main.cpp.o: \
  /usr/include/spdlog/sinks/ansicolor_sink-inl.h \
  /usr/include/spdlog/version.h \
  /usr/include/spdlog/details/synchronous_factory.h \
- /usr/include/spdlog/spdlog-inl.h \
+ /usr/include/spdlog/spdlog-inl.h /usr/include/mysql/mysql.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
+ /usr/include/mysql/field_types.h /usr/include/mysql/my_list.h \
+ /usr/include/mysql/mysql_com.h /usr/include/mysql/my_command.h \
+ /usr/include/mysql/my_compress.h \
+ /usr/include/mysql/udf_registration_types.h \
+ /usr/include/mysql/client_plugin.h /usr/include/c++/11/stdlib.h \
+ /usr/include/mysql/plugin_auth_common.h \
+ /usr/include/mysql/mysql_version.h /usr/include/mysql/mysql_time.h \
+ /usr/include/mysql/errmsg.h \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/config/config.h \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/AuthHandler.h \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Services/AuthService.h \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/User.h \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Repositories/UserRepository.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Repositories/../Utils/DatabaseConnection.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/DeviceHandler.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Repositories/DeviceRepository.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/Device.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/AlarmHandler.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/../Repositories/AlarmRepository.h \
+ /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/Alarm.h \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Middleware/AuthMiddleware.h \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Middleware/CorsMiddleware.h \
  /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Middleware/LogMiddleware.h

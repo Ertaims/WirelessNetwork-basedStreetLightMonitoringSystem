@@ -3,9 +3,12 @@
 #include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
 #include <iostream>
+#include <mysql/mysql.h>
 
 #include "config/config.h"
 #include "http/Handlers/AuthHandler.h"
+#include "http/Handlers/DeviceHandler.h"
+#include "http/Handlers/AlarmHandler.h"
 #include "http/Middleware/AuthMiddleware.h"
 #include "http/Middleware/CorsMiddleware.h"
 #include "http/Middleware/LogMiddleware.h"
@@ -53,6 +56,9 @@ int main() {
     spdlog::set_level(spdlog::level::info);
     spdlog::info("智能路灯监控系统后端启动...");
 
+    // 初始化MySQL库
+    mysql_library_init(0, nullptr, nullptr);
+
     // 创建HTTP服务器
     httplib::Server svr;
     svr.set_mount_point("/data", "./data");
@@ -65,6 +71,14 @@ int main() {
     spdlog::info("创建AuthHandler");
     AuthHandler authHandler;
     authHandler.registerRoutes(svr);
+
+    spdlog::info("创建DeviceHandler");
+    DeviceHandler deviceHandler;
+    deviceHandler.registerRoutes(svr);
+
+    spdlog::info("创建AlarmHandler");
+    AlarmHandler alarmHandler;
+    alarmHandler.registerRoutes(svr);
 
     UserRepository userRepository;
     
@@ -94,8 +108,13 @@ int main() {
     // 启动服务器
     int port = 8080;
     spdlog::info("服务器启动在端口 {}", port);
+    
+    // 启动服务器（阻塞调用）
     svr.listen("0.0.0.0", port);
-
+    
+    // 清理MySQL库资源
+    mysql_library_end();
+    
     return 0;
 
 }

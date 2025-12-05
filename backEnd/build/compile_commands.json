@@ -11,8 +11,18 @@
 },
 {
   "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
+  "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/AlarmHandler.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/AlarmHandler.cpp",
+  "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/AlarmHandler.cpp"
+},
+{
+  "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
   "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/AuthHandler.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/AuthHandler.cpp",
   "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/AuthHandler.cpp"
+},
+{
+  "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
+  "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/DeviceHandler.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/DeviceHandler.cpp",
+  "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Handlers/DeviceHandler.cpp"
 },
 {
   "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
@@ -31,8 +41,33 @@
 },
 {
   "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
+  "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/Alarm.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/Alarm.cpp",
+  "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/Alarm.cpp"
+},
+{
+  "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
+  "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/Device.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/Device.cpp",
+  "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/Device.cpp"
+},
+{
+  "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
+  "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/EnergyRecord.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/EnergyRecord.cpp",
+  "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/EnergyRecord.cpp"
+},
+{
+  "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
   "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/User.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/User.cpp",
   "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Models/User.cpp"
+},
+{
+  "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
+  "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Repositories/AlarmRepository.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Repositories/AlarmRepository.cpp",
+  "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Repositories/AlarmRepository.cpp"
+},
+{
+  "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
+  "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Repositories/DeviceRepository.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Repositories/DeviceRepository.cpp",
+  "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Repositories/DeviceRepository.cpp"
 },
 {
   "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
@@ -43,6 +78,11 @@
   "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
   "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Services/AuthService.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Services/AuthService.cpp",
   "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Services/AuthService.cpp"
+},
+{
+  "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",
+  "command": "/usr/bin/g++ -DFMT_LOCALE -DFMT_SHARED -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src -I/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http -I/usr/include/mysql -g -std=c++17 -o CMakeFiles/streetlight-monitor-backend.dir/src/http/Utils/DatabaseConnection.cpp.o -c /home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Utils/DatabaseConnection.cpp",
+  "file": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/src/http/Utils/DatabaseConnection.cpp"
 },
 {
   "directory": "/home/cxk/WirelessNetwork-basedStreetLightMonitoringSystem/backEnd/build",

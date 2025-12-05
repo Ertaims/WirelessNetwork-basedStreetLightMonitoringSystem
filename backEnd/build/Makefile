@@ -177,6 +177,30 @@ src/core/LampMonitor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/core/LampMonitor.cpp.s
 .PHONY : src/core/LampMonitor.cpp.s
 
+src/http/Handlers/AlarmHandler.o: src/http/Handlers/AlarmHandler.cpp.o
+.PHONY : src/http/Handlers/AlarmHandler.o
+
+# target to build an object file
+src/http/Handlers/AlarmHandler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/AlarmHandler.cpp.o
+.PHONY : src/http/Handlers/AlarmHandler.cpp.o
+
+src/http/Handlers/AlarmHandler.i: src/http/Handlers/AlarmHandler.cpp.i
+.PHONY : src/http/Handlers/AlarmHandler.i
+
+# target to preprocess a source file
+src/http/Handlers/AlarmHandler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/AlarmHandler.cpp.i
+.PHONY : src/http/Handlers/AlarmHandler.cpp.i
+
+src/http/Handlers/AlarmHandler.s: src/http/Handlers/AlarmHandler.cpp.s
+.PHONY : src/http/Handlers/AlarmHandler.s
+
+# target to generate assembly for a file
+src/http/Handlers/AlarmHandler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/AlarmHandler.cpp.s
+.PHONY : src/http/Handlers/AlarmHandler.cpp.s
+
 src/http/Handlers/AuthHandler.o: src/http/Handlers/AuthHandler.cpp.o
 .PHONY : src/http/Handlers/AuthHandler.o
 
@@ -200,6 +224,30 @@ src/http/Handlers/AuthHandler.s: src/http/Handlers/AuthHandler.cpp.s
 src/http/Handlers/AuthHandler.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/AuthHandler.cpp.s
 .PHONY : src/http/Handlers/AuthHandler.cpp.s
+
+src/http/Handlers/DeviceHandler.o: src/http/Handlers/DeviceHandler.cpp.o
+.PHONY : src/http/Handlers/DeviceHandler.o
+
+# target to build an object file
+src/http/Handlers/DeviceHandler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/DeviceHandler.cpp.o
+.PHONY : src/http/Handlers/DeviceHandler.cpp.o
+
+src/http/Handlers/DeviceHandler.i: src/http/Handlers/DeviceHandler.cpp.i
+.PHONY : src/http/Handlers/DeviceHandler.i
+
+# target to preprocess a source file
+src/http/Handlers/DeviceHandler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/DeviceHandler.cpp.i
+.PHONY : src/http/Handlers/DeviceHandler.cpp.i
+
+src/http/Handlers/DeviceHandler.s: src/http/Handlers/DeviceHandler.cpp.s
+.PHONY : src/http/Handlers/DeviceHandler.s
+
+# target to generate assembly for a file
+src/http/Handlers/DeviceHandler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Handlers/DeviceHandler.cpp.s
+.PHONY : src/http/Handlers/DeviceHandler.cpp.s
 
 src/http/Middleware/AuthMiddleware.o: src/http/Middleware/AuthMiddleware.cpp.o
 .PHONY : src/http/Middleware/AuthMiddleware.o
@@ -273,6 +321,78 @@ src/http/Middleware/LogMiddleware.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Middleware/LogMiddleware.cpp.s
 .PHONY : src/http/Middleware/LogMiddleware.cpp.s
 
+src/http/Models/Alarm.o: src/http/Models/Alarm.cpp.o
+.PHONY : src/http/Models/Alarm.o
+
+# target to build an object file
+src/http/Models/Alarm.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/Alarm.cpp.o
+.PHONY : src/http/Models/Alarm.cpp.o
+
+src/http/Models/Alarm.i: src/http/Models/Alarm.cpp.i
+.PHONY : src/http/Models/Alarm.i
+
+# target to preprocess a source file
+src/http/Models/Alarm.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/Alarm.cpp.i
+.PHONY : src/http/Models/Alarm.cpp.i
+
+src/http/Models/Alarm.s: src/http/Models/Alarm.cpp.s
+.PHONY : src/http/Models/Alarm.s
+
+# target to generate assembly for a file
+src/http/Models/Alarm.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/Alarm.cpp.s
+.PHONY : src/http/Models/Alarm.cpp.s
+
+src/http/Models/Device.o: src/http/Models/Device.cpp.o
+.PHONY : src/http/Models/Device.o
+
+# target to build an object file
+src/http/Models/Device.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/Device.cpp.o
+.PHONY : src/http/Models/Device.cpp.o
+
+src/http/Models/Device.i: src/http/Models/Device.cpp.i
+.PHONY : src/http/Models/Device.i
+
+# target to preprocess a source file
+src/http/Models/Device.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/Device.cpp.i
+.PHONY : src/http/Models/Device.cpp.i
+
+src/http/Models/Device.s: src/http/Models/Device.cpp.s
+.PHONY : src/http/Models/Device.s
+
+# target to generate assembly for a file
+src/http/Models/Device.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/Device.cpp.s
+.PHONY : src/http/Models/Device.cpp.s
+
+src/http/Models/EnergyRecord.o: src/http/Models/EnergyRecord.cpp.o
+.PHONY : src/http/Models/EnergyRecord.o
+
+# target to build an object file
+src/http/Models/EnergyRecord.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/EnergyRecord.cpp.o
+.PHONY : src/http/Models/EnergyRecord.cpp.o
+
+src/http/Models/EnergyRecord.i: src/http/Models/EnergyRecord.cpp.i
+.PHONY : src/http/Models/EnergyRecord.i
+
+# target to preprocess a source file
+src/http/Models/EnergyRecord.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/EnergyRecord.cpp.i
+.PHONY : src/http/Models/EnergyRecord.cpp.i
+
+src/http/Models/EnergyRecord.s: src/http/Models/EnergyRecord.cpp.s
+.PHONY : src/http/Models/EnergyRecord.s
+
+# target to generate assembly for a file
+src/http/Models/EnergyRecord.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/EnergyRecord.cpp.s
+.PHONY : src/http/Models/EnergyRecord.cpp.s
+
 src/http/Models/User.o: src/http/Models/User.cpp.o
 .PHONY : src/http/Models/User.o
 
@@ -296,6 +416,54 @@ src/http/Models/User.s: src/http/Models/User.cpp.s
 src/http/Models/User.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Models/User.cpp.s
 .PHONY : src/http/Models/User.cpp.s
+
+src/http/Repositories/AlarmRepository.o: src/http/Repositories/AlarmRepository.cpp.o
+.PHONY : src/http/Repositories/AlarmRepository.o
+
+# target to build an object file
+src/http/Repositories/AlarmRepository.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Repositories/AlarmRepository.cpp.o
+.PHONY : src/http/Repositories/AlarmRepository.cpp.o
+
+src/http/Repositories/AlarmRepository.i: src/http/Repositories/AlarmRepository.cpp.i
+.PHONY : src/http/Repositories/AlarmRepository.i
+
+# target to preprocess a source file
+src/http/Repositories/AlarmRepository.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Repositories/AlarmRepository.cpp.i
+.PHONY : src/http/Repositories/AlarmRepository.cpp.i
+
+src/http/Repositories/AlarmRepository.s: src/http/Repositories/AlarmRepository.cpp.s
+.PHONY : src/http/Repositories/AlarmRepository.s
+
+# target to generate assembly for a file
+src/http/Repositories/AlarmRepository.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Repositories/AlarmRepository.cpp.s
+.PHONY : src/http/Repositories/AlarmRepository.cpp.s
+
+src/http/Repositories/DeviceRepository.o: src/http/Repositories/DeviceRepository.cpp.o
+.PHONY : src/http/Repositories/DeviceRepository.o
+
+# target to build an object file
+src/http/Repositories/DeviceRepository.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Repositories/DeviceRepository.cpp.o
+.PHONY : src/http/Repositories/DeviceRepository.cpp.o
+
+src/http/Repositories/DeviceRepository.i: src/http/Repositories/DeviceRepository.cpp.i
+.PHONY : src/http/Repositories/DeviceRepository.i
+
+# target to preprocess a source file
+src/http/Repositories/DeviceRepository.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Repositories/DeviceRepository.cpp.i
+.PHONY : src/http/Repositories/DeviceRepository.cpp.i
+
+src/http/Repositories/DeviceRepository.s: src/http/Repositories/DeviceRepository.cpp.s
+.PHONY : src/http/Repositories/DeviceRepository.s
+
+# target to generate assembly for a file
+src/http/Repositories/DeviceRepository.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Repositories/DeviceRepository.cpp.s
+.PHONY : src/http/Repositories/DeviceRepository.cpp.s
 
 src/http/Repositories/UserRepository.o: src/http/Repositories/UserRepository.cpp.o
 .PHONY : src/http/Repositories/UserRepository.o
@@ -344,6 +512,30 @@ src/http/Services/AuthService.s: src/http/Services/AuthService.cpp.s
 src/http/Services/AuthService.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Services/AuthService.cpp.s
 .PHONY : src/http/Services/AuthService.cpp.s
+
+src/http/Utils/DatabaseConnection.o: src/http/Utils/DatabaseConnection.cpp.o
+.PHONY : src/http/Utils/DatabaseConnection.o
+
+# target to build an object file
+src/http/Utils/DatabaseConnection.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Utils/DatabaseConnection.cpp.o
+.PHONY : src/http/Utils/DatabaseConnection.cpp.o
+
+src/http/Utils/DatabaseConnection.i: src/http/Utils/DatabaseConnection.cpp.i
+.PHONY : src/http/Utils/DatabaseConnection.i
+
+# target to preprocess a source file
+src/http/Utils/DatabaseConnection.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Utils/DatabaseConnection.cpp.i
+.PHONY : src/http/Utils/DatabaseConnection.cpp.i
+
+src/http/Utils/DatabaseConnection.s: src/http/Utils/DatabaseConnection.cpp.s
+.PHONY : src/http/Utils/DatabaseConnection.s
+
+# target to generate assembly for a file
+src/http/Utils/DatabaseConnection.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/streetlight-monitor-backend.dir/build.make CMakeFiles/streetlight-monitor-backend.dir/src/http/Utils/DatabaseConnection.cpp.s
+.PHONY : src/http/Utils/DatabaseConnection.cpp.s
 
 src/http/Utils/JsonParser.o: src/http/Utils/JsonParser.cpp.o
 .PHONY : src/http/Utils/JsonParser.o
@@ -480,9 +672,15 @@ help:
 	@echo "... src/core/LampMonitor.o"
 	@echo "... src/core/LampMonitor.i"
 	@echo "... src/core/LampMonitor.s"
+	@echo "... src/http/Handlers/AlarmHandler.o"
+	@echo "... src/http/Handlers/AlarmHandler.i"
+	@echo "... src/http/Handlers/AlarmHandler.s"
 	@echo "... src/http/Handlers/AuthHandler.o"
 	@echo "... src/http/Handlers/AuthHandler.i"
 	@echo "... src/http/Handlers/AuthHandler.s"
+	@echo "... src/http/Handlers/DeviceHandler.o"
+	@echo "... src/http/Handlers/DeviceHandler.i"
+	@echo "... src/http/Handlers/DeviceHandler.s"
 	@echo "... src/http/Middleware/AuthMiddleware.o"
 	@echo "... src/http/Middleware/AuthMiddleware.i"
 	@echo "... src/http/Middleware/AuthMiddleware.s"
@@ -492,15 +690,33 @@ help:
 	@echo "... src/http/Middleware/LogMiddleware.o"
 	@echo "... src/http/Middleware/LogMiddleware.i"
 	@echo "... src/http/Middleware/LogMiddleware.s"
+	@echo "... src/http/Models/Alarm.o"
+	@echo "... src/http/Models/Alarm.i"
+	@echo "... src/http/Models/Alarm.s"
+	@echo "... src/http/Models/Device.o"
+	@echo "... src/http/Models/Device.i"
+	@echo "... src/http/Models/Device.s"
+	@echo "... src/http/Models/EnergyRecord.o"
+	@echo "... src/http/Models/EnergyRecord.i"
+	@echo "... src/http/Models/EnergyRecord.s"
 	@echo "... src/http/Models/User.o"
 	@echo "... src/http/Models/User.i"
 	@echo "... src/http/Models/User.s"
+	@echo "... src/http/Repositories/AlarmRepository.o"
+	@echo "... src/http/Repositories/AlarmRepository.i"
+	@echo "... src/http/Repositories/AlarmRepository.s"
+	@echo "... src/http/Repositories/DeviceRepository.o"
+	@echo "... src/http/Repositories/DeviceRepository.i"
+	@echo "... src/http/Repositories/DeviceRepository.s"
 	@echo "... src/http/Repositories/UserRepository.o"
 	@echo "... src/http/Repositories/UserRepository.i"
 	@echo "... src/http/Repositories/UserRepository.s"
 	@echo "... src/http/Services/AuthService.o"
 	@echo "... src/http/Services/AuthService.i"
 	@echo "... src/http/Services/AuthService.s"
+	@echo "... src/http/Utils/DatabaseConnection.o"
+	@echo "... src/http/Utils/DatabaseConnection.i"
+	@echo "... src/http/Utils/DatabaseConnection.s"
 	@echo "... src/http/Utils/JsonParser.o"
 	@echo "... src/http/Utils/JsonParser.i"
 	@echo "... src/http/Utils/JsonParser.s"

@@ -5,71 +5,23 @@
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 
-UserRepository::UserRepository() : db(nullptr)
+UserRepository::UserRepository()
 {
-    initDatabase();
+    // 不再需要自己初始化数据库连接
 }
 
 UserRepository::~UserRepository()
 {
-    if(db)
-    {
-        mysql_close(static_cast<MYSQL*>(db));
-    }
-}
-
-void UserRepository::initDatabase()
-{
-    try
-    {
-        // 初始化MySQL连接
-        mysql_library_init(0, nullptr, nullptr);
-
-        // 初始化数据库连接
-        MYSQL* conn = mysql_init(nullptr);
-        if(!conn)
-        {
-            throw std::runtime_error("无法初始化MySQL连接");
-        }
-
-        // 从配置中获取数据库连接参数
-        Config& config = Config::getInstance();
-        const char* host = config.getDatabaseHost().c_str();
-        const char* user = config.getDatabaseUsername().c_str();
-        const char* password = config.getDatabasePassword().c_str();
-        const char* database = config.getDatabaseName().c_str();
-        int port = config.getDatabasePort();
-
-        // 打印数据库连接参数（仅用于调试）
-        spdlog::info("数据库连接参数: 主机={}, 端口={}, 用户名={}, 数据库名={}", host, port, user, database);
-
-        // 建立连接
-        if (!mysql_real_connect(conn, host, user, password, database, port, nullptr, 0)) {
-            spdlog::error("连接数据库失败: {}", mysql_error(conn));
-            spdlog::error("尝试连接的参数: 主机={}, 端口={}, 用户名={}, 数据库名={}", 
-                         host, port, user, database);
-            mysql_close(conn);
-            throw std::runtime_error("连接数据库失败");
-        }
-        
-        // 将连接保存到成员变量
-        db = conn;
-    }
-    catch(const std::exception& e)
-    {
-        spdlog::error("初始化数据库错误: {}", e.what());
-        throw;
-    }
+    // 不再需要自己关闭数据库连接
 }
 
 bool UserRepository::createUser(const User &user)
 {
     try
     {
-        MYSQL* conn = static_cast<MYSQL*>(db);
-        if (!conn) {
-            // 数据库连接无效，返回失败
-            spdlog::error("数据库连接无效，无法创建用户");
+        MYSQL* conn = dbConnection.getConnection();
+        if (conn == nullptr) {
+            spdlog::error("无法获取数据库连接");
             return false;
         }
 
@@ -187,18 +139,23 @@ bool UserRepository::createUser(const User &user)
 
 std::shared_ptr<User> UserRepository::getUserByUsername(const std::string &username)
 {
+    MYSQL_STMT* stmt = nullptr;
+    unsigned long* length1 = nullptr;
+    unsigned long* length2 = nullptr;
+    unsigned long* length3 = nullptr;
+    unsigned long* length4 = nullptr;
+    
     try
     {
-        MYSQL* conn = static_cast<MYSQL*>(db);
-        if (!conn) {
-            // 数据库连接无效，返回空指针
-            spdlog::error("数据库连接无效，无法通过用户名获取用户");
+        MYSQL* conn = dbConnection.getConnection();
+        if (conn == nullptr) {
+            spdlog::error("无法获取数据库连接");
             return nullptr;
         }
 
         // 准备SQL语句
         std::string sql = "SELECT id, username, password, role, created_at FROM users WHERE username = ?";
-        MYSQL_STMT* stmt = mysql_stmt_init(conn);
+        stmt = mysql_stmt_init(conn);
         if (!stmt) {
             throw std::runtime_error("无法初始化SQL语句");
         }
@@ -246,31 +203,29 @@ std::shared_ptr<User> UserRepository::getUserByUsername(const std::string &usern
         resultBind[1].buffer_type = MYSQL_TYPE_STRING;
         resultBind[1].buffer = usernameResult;
         resultBind[1].buffer_length = sizeof(usernameResult);
-        resultBind[1].length = new unsigned long;
+        length1 = new unsigned long;
+        resultBind[1].length = length1;
 
         resultBind[2].buffer_type = MYSQL_TYPE_STRING;
         resultBind[2].buffer = passwordHash;
         resultBind[2].buffer_length = sizeof(passwordHash);
-        resultBind[2].length = new unsigned long;
+        length2 = new unsigned long;
+        resultBind[2].length = length2;
 
         resultBind[3].buffer_type = MYSQL_TYPE_STRING;
         resultBind[3].buffer = role;
         resultBind[3].buffer_length = sizeof(role);
-        resultBind[3].length = new unsigned long;
+        length3 = new unsigned long;
+        resultBind[3].length = length3;
 
         resultBind[4].buffer_type = MYSQL_TYPE_STRING;
         resultBind[4].buffer = createdAt;
         resultBind[4].buffer_length = sizeof(createdAt);
-        resultBind[4].length = new unsigned long;
+        length4 = new unsigned long;
+        resultBind[4].length = length4;
 
         if (mysql_stmt_bind_result(stmt, resultBind) != 0) {
             std::string error = mysql_stmt_error(stmt);
-            // 清理内存
-            delete resultBind[1].length;
-            delete resultBind[2].length;
-            delete resultBind[3].length;
-            delete resultBind[4].length;
-            mysql_stmt_close(stmt);
             throw std::runtime_error("绑定结果失败: " + error);
         }
 
@@ -279,29 +234,29 @@ std::shared_ptr<User> UserRepository::getUserByUsername(const std::string &usern
             // 创建用户对象
             auto user = std::make_shared<User>();
             user->setId(id);
-            user->setUsername(std::string(usernameResult, *resultBind[1].length));
-            user->setPasswordHash(std::string(passwordHash, *resultBind[2].length));
-            user->setRole(std::string(role, *resultBind[3].length));
-            user->setCreatedAt(std::string(createdAt, *resultBind[4].length));
+            user->setUsername(std::string(usernameResult, *length1));
+            user->setPasswordHash(std::string(passwordHash, *length2));
+            user->setRole(std::string(role, *length3));
+            user->setCreatedAt(std::string(createdAt, *length4));
 
             // 输出结果
             spdlog::info("获取用户成功: {}", user->getUsername());
 
             // 清理内存
-            delete resultBind[1].length;
-            delete resultBind[2].length;
-            delete resultBind[3].length;
-            delete resultBind[4].length;
+            delete length1;
+            delete length2;
+            delete length3;
+            delete length4;
             mysql_stmt_close(stmt);
 
             return user;
         }
 
         // 清理内存
-        delete resultBind[1].length;
-        delete resultBind[2].length;
-        delete resultBind[3].length;
-        delete resultBind[4].length;
+        delete length1;
+        delete length2;
+        delete length3;
+        delete length4;
         mysql_stmt_close(stmt);
 
         return nullptr;
@@ -309,24 +264,37 @@ std::shared_ptr<User> UserRepository::getUserByUsername(const std::string &usern
     catch(const std::exception& e)
     {
         spdlog::error("通过用户名获取用户失败: {}", e.what());
+        // 确保在异常情况下释放所有资源
+        delete length1;
+        delete length2;
+        delete length3;
+        delete length4;
+        if (stmt) {
+            mysql_stmt_close(stmt);
+        }
         return nullptr;
     }
 }
 
 std::shared_ptr<User> UserRepository::getUserById(int id)
 {
+    MYSQL_STMT* stmt = nullptr;
+    unsigned long* length1 = nullptr;
+    unsigned long* length2 = nullptr;
+    unsigned long* length3 = nullptr;
+    unsigned long* length4 = nullptr;
+    
     try
     {
-        MYSQL* conn = static_cast<MYSQL*>(db);
-        if (!conn) {
-            // 数据库连接无效，返回空指针
-            spdlog::error("数据库连接无效，无法通过ID获取用户");
+        MYSQL* conn = dbConnection.getConnection();
+        if (conn == nullptr) {
+            spdlog::error("无法获取数据库连接");
             return nullptr;
         }
 
         // 准备SQL语句
         std::string sql = "SELECT id, username, password, role, created_at FROM users WHERE id = ?";
-        MYSQL_STMT* stmt = mysql_stmt_init(conn);
+        stmt = mysql_stmt_init(conn);
         if (!stmt) {
             throw std::runtime_error("无法初始化SQL语句");
         }
@@ -373,31 +341,29 @@ std::shared_ptr<User> UserRepository::getUserById(int id)
         resultBind[1].buffer_type = MYSQL_TYPE_STRING;
         resultBind[1].buffer = username;
         resultBind[1].buffer_length = sizeof(username);
-        resultBind[1].length = new unsigned long;
+        length1 = new unsigned long;
+        resultBind[1].length = length1;
 
         resultBind[2].buffer_type = MYSQL_TYPE_STRING;
         resultBind[2].buffer = passwordHash;
         resultBind[2].buffer_length = sizeof(passwordHash);
-        resultBind[2].length = new unsigned long;
+        length2 = new unsigned long;
+        resultBind[2].length = length2;
 
         resultBind[3].buffer_type = MYSQL_TYPE_STRING;
         resultBind[3].buffer = role;
         resultBind[3].buffer_length = sizeof(role);
-        resultBind[3].length = new unsigned long;
+        length3 = new unsigned long;
+        resultBind[3].length = length3;
 
         resultBind[4].buffer_type = MYSQL_TYPE_STRING;
         resultBind[4].buffer = createdAt;
         resultBind[4].buffer_length = sizeof(createdAt);
-        resultBind[4].length = new unsigned long;
+        length4 = new unsigned long;
+        resultBind[4].length = length4;
 
         if (mysql_stmt_bind_result(stmt, resultBind) != 0) {
             std::string error = mysql_stmt_error(stmt);
-            // 清理内存
-            delete resultBind[1].length;
-            delete resultBind[2].length;
-            delete resultBind[3].length;
-            delete resultBind[4].length;
-            mysql_stmt_close(stmt);
             throw std::runtime_error("绑定结果失败: " + error);
         }
 
@@ -406,26 +372,26 @@ std::shared_ptr<User> UserRepository::getUserById(int id)
             // 创建用户对象
             auto user = std::make_shared<User>();
             user->setId(idResult);
-            user->setUsername(std::string(username, *resultBind[1].length));
-            user->setPasswordHash(std::string(passwordHash, *resultBind[2].length));
-            user->setRole(std::string(role, *resultBind[3].length));
-            user->setCreatedAt(std::string(createdAt, *resultBind[4].length));
+            user->setUsername(std::string(username, *length1));
+            user->setPasswordHash(std::string(passwordHash, *length2));
+            user->setRole(std::string(role, *length3));
+            user->setCreatedAt(std::string(createdAt, *length4));
 
             // 清理内存
-            delete resultBind[1].length;
-            delete resultBind[2].length;
-            delete resultBind[3].length;
-            delete resultBind[4].length;
+            delete length1;
+            delete length2;
+            delete length3;
+            delete length4;
             mysql_stmt_close(stmt);
 
             return user;
         }
 
         // 清理内存
-        delete resultBind[1].length;
-        delete resultBind[2].length;
-        delete resultBind[3].length;
-        delete resultBind[4].length;
+        delete length1;
+        delete length2;
+        delete length3;
+        delete length4;
         mysql_stmt_close(stmt);
 
         return nullptr;
@@ -433,6 +399,14 @@ std::shared_ptr<User> UserRepository::getUserById(int id)
     catch(const std::exception& e)
     {
         spdlog::error("通过ID获取用户失败: {}", e.what());
+        // 确保在异常情况下释放所有资源
+        delete length1;
+        delete length2;
+        delete length3;
+        delete length4;
+        if (stmt) {
+            mysql_stmt_close(stmt);
+        }
         return nullptr;
     }
 }
@@ -442,10 +416,9 @@ std::vector<User> UserRepository::getAllUsers()
     std::vector<User> users;
     try
     {
-        MYSQL* conn = static_cast<MYSQL*>(db);
-        if (!conn) {
-            // 数据库连接无效，返回空向量
-            spdlog::error("数据库连接无效，无法获取所有用户");
+        MYSQL* conn = dbConnection.getConnection();
+        if (conn == nullptr) {
+            spdlog::error("无法获取数据库连接");
             return users;
         }
 
@@ -488,10 +461,9 @@ bool UserRepository::updateUser(const User &user)
 {
     try
     {
-        MYSQL* conn = static_cast<MYSQL*>(db);
-        if (!conn) {
-            // 数据库连接无效，返回失败
-            spdlog::error("数据库连接无效，无法更新用户");
+        MYSQL* conn = dbConnection.getConnection();
+        if (conn == nullptr) {
+            spdlog::error("无法获取数据库连接");
             return false;
         }
 
@@ -562,10 +534,9 @@ bool UserRepository::deleteUser(int id)
 {
     try
     {
-        MYSQL* conn = static_cast<MYSQL*>(db);
-        if (!conn) {
-            // 数据库连接无效，返回失败
-            spdlog::error("数据库连接无效，无法删除用户");
+        MYSQL* conn = dbConnection.getConnection();
+        if (conn == nullptr) {
+            spdlog::error("无法获取数据库连接");
             return false;
         }
 
