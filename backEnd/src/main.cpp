@@ -1,4 +1,4 @@
-//#include "core/LampMonitor.h"
+#include "core/LampMonitor.h"
 #include <httplib.h>
 #include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
@@ -55,6 +55,20 @@ int main() {
     // 初始化日志
     spdlog::set_level(spdlog::level::info);
     spdlog::info("智能路灯监控系统后端启动...");
+
+    // 初始化并启动LampMonitor
+    spdlog::info("初始化LampMonitor...");
+    const std::string server_address = "tcp://10.201.40.164:1883";
+    const std::string client_id = "LampMonitorClient";
+    
+    LampMonitor& lampMonitor = LampMonitor::getInstance();
+    if (!lampMonitor.initialize(server_address, client_id)) {
+        spdlog::error("无法初始化LampMonitor");
+    } else if (!lampMonitor.start()) {
+        spdlog::error("无法启动LampMonitor");
+    } else {
+        spdlog::info("LampMonitor启动成功");
+    }
 
     // 初始化MySQL库
     mysql_library_init(0, nullptr, nullptr);

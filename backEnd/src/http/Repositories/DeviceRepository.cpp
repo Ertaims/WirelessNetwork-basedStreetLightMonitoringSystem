@@ -1,5 +1,6 @@
 #include "DeviceRepository.h"
 #include "config/config.h"
+#include "core/LampMonitor.h"
 #include <mysql/mysql.h>
 #include <spdlog/spdlog.h>
 #include <stdexcept>
@@ -764,6 +765,77 @@ bool DeviceRepository::controlDevice(int id, const std::string& action, int brig
             return false;
         }
 
+        // 获取设备信息
+        std::string deviceName;
+        std::string groupName;
+        std::string getDeviceSql = "SELECT name, group_name FROM devices WHERE id = ?";
+        MYSQL_STMT* getDeviceStmt = mysql_stmt_init(conn);
+        if (!getDeviceStmt) {
+            throw std::runtime_error("无法初始化获取设备信息的SQL语句");
+        }
+        
+        MYSQL_BIND getBind[1];
+        memset(getBind, 0, sizeof(getBind));
+        getBind[0].buffer_type = MYSQL_TYPE_LONG;
+        getBind[0].buffer = &id;
+        
+        if (mysql_stmt_prepare(getDeviceStmt, getDeviceSql.c_str(), getDeviceSql.length()) != 0) {
+            std::string error = mysql_stmt_error(getDeviceStmt);
+            mysql_stmt_close(getDeviceStmt);
+            throw std::runtime_error("准备获取设备信息的SQL语句失败: " + error);
+        }
+        
+        if (mysql_stmt_bind_param(getDeviceStmt, getBind) != 0) {
+            std::string error = mysql_stmt_error(getDeviceStmt);
+            mysql_stmt_close(getDeviceStmt);
+            throw std::runtime_error("绑定获取设备信息的参数失败: " + error);
+        }
+        
+        if (mysql_stmt_execute(getDeviceStmt) != 0) {
+            std::string error = mysql_stmt_error(getDeviceStmt);
+            mysql_stmt_close(getDeviceStmt);
+            throw std::runtime_error("执行获取设备信息的SQL语句失败: " + error);
+        }
+        
+        // 绑定结果
+        MYSQL_BIND resultBind[2];
+        memset(resultBind, 0, sizeof(resultBind));
+        
+        char nameBuffer[256];
+        char groupBuffer[256];
+        unsigned long nameLength = 0;
+        unsigned long groupLength = 0;
+        
+        resultBind[0].buffer_type = MYSQL_TYPE_STRING;
+        resultBind[0].buffer = nameBuffer;
+        resultBind[0].buffer_length = sizeof(nameBuffer);
+        resultBind[0].length = &nameLength;
+        
+        resultBind[1].buffer_type = MYSQL_TYPE_STRING;
+        resultBind[1].buffer = groupBuffer;
+        resultBind[1].buffer_length = sizeof(groupBuffer);
+        resultBind[1].length = &groupLength;
+        
+        if (mysql_stmt_bind_result(getDeviceStmt, resultBind) != 0) {
+            std::string error = mysql_stmt_error(getDeviceStmt);
+            mysql_stmt_close(getDeviceStmt);
+            throw std::runtime_error("绑定获取设备信息的结果失败: " + error);
+        }
+        
+        // 获取结果
+        if (mysql_stmt_fetch(getDeviceStmt) != 0) {
+            mysql_stmt_close(getDeviceStmt);
+            throw std::runtime_error("获取设备信息失败: 设备不存在");
+        }
+        
+        // 处理结果
+        nameBuffer[nameLength] = '\0';
+        groupBuffer[groupLength] = '\0';
+        deviceName = std::string(nameBuffer);
+        groupName = std::string(groupBuffer);
+        
+        mysql_stmt_close(getDeviceStmt);
+        
         // 准备SQL语句
         std::string sql = "UPDATE devices SET power = ?, brightness = ?, updated_at = NOW() WHERE id = ?";
         MYSQL_STMT* stmt = mysql_stmt_init(conn);
@@ -795,12 +867,14 @@ bool DeviceRepository::controlDevice(int id, const std::string& action, int brig
             power = "ON";
             strncpy(powerBuffer, power.c_str(), sizeof(powerBuffer) - 1);
             spdlog::info("发布MQTT消息，控制小灯开");
+            LampMonitor::getInstance().controlLamp("switch", power, groupName[0], deviceName, brightness);
         }
         else if (strcmp(action.c_str(), "turn_off") == 0)
         {
             power = "OFF";
             strncpy(powerBuffer, power.c_str(), sizeof(powerBuffer) - 1);
             spdlog::info("发布MQTT消息，控制小灯关");
+            LampMonitor::getInstance().controlLamp("switch", power, groupName[0], deviceName, brightness);
         }
         else if (strcmp(action.c_str(), "set_brightness") == 0)
         {
@@ -815,6 +889,7 @@ bool DeviceRepository::controlDevice(int id, const std::string& action, int brig
                 strncpy(powerBuffer, power.c_str(), sizeof(powerBuffer) - 1);
             }
             spdlog::info("发布MQTT消息，控制小灯设置亮度");
+            LampMonitor::getInstance().controlLamp("dim", power, groupName[0], deviceName, brightness);
         }
         powerBuffer[sizeof(powerBuffer) - 1] = '\0';
 

@@ -6,6 +6,9 @@
 #include <sstream>
 #include <mutex>
 
+// 初始化静态实例指针
+LampMonitor* LampMonitor::instance = nullptr;
+
 std::mutex g_cout_mutex; // 全局互斥锁保护输出
 
 // 前时间的格式化字符串 "YYYY-MM-DD HH:MM:SS"
@@ -18,30 +21,69 @@ static std::string getCurrentTimestamp() {
     return oss.str();
 }
 
-LampMonitor::LampMonitor(const std::string& server_address, const std::string& client_id)
-    : mqtt_client(server_address, client_id), clientID(client_id)
-{
+// 私有构造函数
+LampMonitor::LampMonitor() : mqtt_client(nullptr), isInitialized(false) {
+}
+
+// 析构函数
+LampMonitor::~LampMonitor() {
+    if (isInitialized) {
+        stop();
+    }
+    if (mqtt_client != nullptr) {
+        delete mqtt_client;
+        mqtt_client = nullptr;
+    }
+}
+
+// 获取单例实例
+LampMonitor& LampMonitor::getInstance() {
+    if (instance == nullptr) {
+        instance = new LampMonitor();
+    }
+    return *instance;
+}
+
+// 初始化方法
+bool LampMonitor::initialize(const std::string& server_address, const std::string& client_id) {
+    if (isInitialized) {
+        return true; // 已初始化
+    }
+    
+    serverAddress = server_address;
+    clientID = client_id;
+    
+    // 动态创建MQTT客户端
+    mqtt_client = new MQTTClientCpp(server_address, client_id);
+    
     // 设置消息回调函数
-    mqtt_client.setMessageCallback(
+    mqtt_client->setMessageCallback(
         [this](const std::string& topic, const std::string& payload) {
             this->onMessageReceived(topic, payload);
         });
+    
+    isInitialized = true;
+    return true;
 }
 
 bool LampMonitor::start()
 {
+    if (!isInitialized) {
+        return false;
+    }
+    
     // 连接到MQTT服务器
-    if(!mqtt_client.connect()) {
+    if(!mqtt_client->connect()) {
         return false;
     }
 
     std::cout << "=========== 订阅主题 ===========" << std::endl;
     // 订阅灯控主题
-    if(!mqtt_client.subscribe(lamp_control_topic + "+")) {
+    if(!mqtt_client->subscribe(lamp_control_topic + "+")) {
         return false;
     }
 
-    if(!mqtt_client.subscribe(lamp_status_topic + "+")) {
+    if(!mqtt_client->subscribe(lamp_status_topic + "+")) {
         return false;
     }
 
@@ -53,7 +95,7 @@ bool LampMonitor::start()
 void LampMonitor::stop()
 {
     std::cout << "停止LampMonitor..." << std::endl;
-    mqtt_client.disconnect();
+    mqtt_client->disconnect();
     std::cout << "LampMonitor已停止." << std::endl;
 }
 
@@ -62,11 +104,11 @@ void LampMonitor::controlLamp(const std::string& command, const std::string &val
     json control_msg;
     control_msg["command"] = command;
     control_msg["value"] = value;
-    control_msg["group"] = group;
+    control_msg["group"] = std::string(1, group);
     control_msg["lamp_id"] = lamp_id;
     control_msg["timestamp"] = getCurrentTimestamp();
 
-    if (command == "ON")
+    if (value == "ON")
     {
         control_msg["brightness"] = brightness;
     }
@@ -76,7 +118,7 @@ void LampMonitor::controlLamp(const std::string& command, const std::string &val
     }
     
     std::string topic = lamp_control_topic + lamp_id;
-    mqtt_client.publish(topic, control_msg.dump());
+    mqtt_client->publish(topic, control_msg.dump());
 }
 
 void LampMonitor::onMessageReceived(const std::string &topic, const std::string &payload)
@@ -96,10 +138,10 @@ void LampMonitor::onMessageReceived(const std::string &topic, const std::string 
             std::string value_ = msg.value("value", "");
             int brightness = msg.value("brightness", 0);
 
-            std::cout << "控制灯 " << lamp_id << " 执行命令: " << value_ << " 亮度: " << brightness << std::endl;
+            std::cout << "控制灯 " << lamp_id << " 执行命令: " << command << " 亮度: " << brightness << std::endl;
             //publishLampStatus(lamp_id, value_, brightness);
         }
-        else if (topic.rfind("lamp/status/", 0) == 0) {
+        else if (topic.rfind("lamp/status/", 0) == 0) {command
             std::string lamp_id = msg.value("lamp_id", "");
             std::string status = msg.value("status", "");
             int brightness = msg.value("brightness", 0);
@@ -125,5 +167,5 @@ void LampMonitor::publishLampStatus(const std::string& lamp_id, const std::strin
     status_msg["timestamp"] = getCurrentTimestamp();
 
     std::string topic = lamp_status_topic + lamp_id;
-    mqtt_client.publish(topic, status_msg.dump());
+    mqtt_client->publish(topic, status_msg.dump());
 }
