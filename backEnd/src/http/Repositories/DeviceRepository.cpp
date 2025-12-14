@@ -934,13 +934,45 @@ bool DeviceRepository::controlDevice(int id, const std::string& action, int brig
     }
 }
 
-bool DeviceRepository::controlGroup(const std::string& group_name, const std::string& power, int brightness)
+bool DeviceRepository::controlGroup(const std::string& action, const std::string& group_name, const std::string& powerParam, int brightness)
 {
     try
     {
         MYSQL* conn = dbConnection.getConnection();
         if (conn == nullptr) {
             spdlog::error("无法获取数据库连接");
+            return false;
+        }
+
+        // 根据action类型处理power值
+        std::string power;
+        std::string command;
+        
+        if (strcmp(action.c_str(), "turn_on") == 0)
+        {
+            power = "ON";
+            command = "switch";
+        }
+        else if (strcmp(action.c_str(), "turn_off") == 0)
+        {
+            power = "OFF";
+            command = "switch";
+        }
+        else if (strcmp(action.c_str(), "set_brightness") == 0)
+        {
+            if (brightness == 0)
+            {
+                power = "OFF";
+            }
+            else
+            {
+                power = "ON";
+            }
+            command = "dim";
+        }
+        else
+        {
+            spdlog::error("未知的操作类型: {}", action);
             return false;
         }
 
@@ -1007,6 +1039,74 @@ bool DeviceRepository::controlGroup(const std::string& group_name, const std::st
             throw std::runtime_error("执行SQL语句失败: " + error);
         }
 
+        // 获取该组下的所有设备ID和名称
+        std::vector<std::string> deviceNames;
+        std::string getDevicesSql = "SELECT name FROM devices WHERE group_name = ?";
+        MYSQL_STMT* getDevicesStmt = mysql_stmt_init(conn);
+        if (!getDevicesStmt) {
+            throw std::runtime_error("无法初始化获取设备列表的SQL语句");
+        }
+        
+        MYSQL_BIND getDevicesBind[1];
+        memset(getDevicesBind, 0, sizeof(getDevicesBind));
+        char groupNameBuf[256];
+        strncpy(groupNameBuf, group_name.c_str(), sizeof(groupNameBuf) - 1);
+        groupNameBuf[sizeof(groupNameBuf) - 1] = '\0';
+        getDevicesBind[0].buffer_type = MYSQL_TYPE_STRING;
+        getDevicesBind[0].buffer = groupNameBuf;
+        getDevicesBind[0].buffer_length = sizeof(groupNameBuf);
+        
+        if (mysql_stmt_prepare(getDevicesStmt, getDevicesSql.c_str(), getDevicesSql.length()) != 0) {
+            std::string error = mysql_stmt_error(getDevicesStmt);
+            mysql_stmt_close(getDevicesStmt);
+            throw std::runtime_error("准备获取设备列表的SQL语句失败: " + error);
+        }
+        
+        if (mysql_stmt_bind_param(getDevicesStmt, getDevicesBind) != 0) {
+            std::string error = mysql_stmt_error(getDevicesStmt);
+            mysql_stmt_close(getDevicesStmt);
+            throw std::runtime_error("绑定获取设备列表的参数失败: " + error);
+        }
+        
+        if (mysql_stmt_execute(getDevicesStmt) != 0) {
+            std::string error = mysql_stmt_error(getDevicesStmt);
+            mysql_stmt_close(getDevicesStmt);
+            throw std::runtime_error("执行获取设备列表的SQL语句失败: " + error);
+        }
+        
+        // 绑定结果
+        MYSQL_BIND resultDevicesBind[1];
+        memset(resultDevicesBind, 0, sizeof(resultDevicesBind));
+        char deviceNameBuf[256];
+        unsigned long deviceNameLen = 0;
+        resultDevicesBind[0].buffer_type = MYSQL_TYPE_STRING;
+        resultDevicesBind[0].buffer = deviceNameBuf;
+        resultDevicesBind[0].buffer_length = sizeof(deviceNameBuf);
+        resultDevicesBind[0].length = &deviceNameLen;
+        
+        if (mysql_stmt_bind_result(getDevicesStmt, resultDevicesBind) != 0) {
+            std::string error = mysql_stmt_error(getDevicesStmt);
+            mysql_stmt_close(getDevicesStmt);
+            throw std::runtime_error("绑定获取设备列表的结果失败: " + error);
+        }
+        
+        // 遍历结果集，收集设备名称
+        while (mysql_stmt_fetch(getDevicesStmt) == 0) {
+            deviceNameBuf[deviceNameLen] = '\0';
+            deviceNames.push_back(std::string(deviceNameBuf));
+        }
+        
+        mysql_stmt_close(getDevicesStmt);
+        
+        // 为每个设备发布MQTT消息
+        spdlog::info("发布MQTT消息，控制小灯组 {}, 操作: {}, 电源: {}, 亮度: {}", group_name, action, power, brightness);
+        for (const auto& deviceName : deviceNames) {
+            // sleep 2s
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            LampMonitor::getInstance().controlLamp(command, power, group_name[0], deviceName, brightness);
+            spdlog::info("已发布MQTT消息，控制设备 {} 执行 {} 操作，指令类型: {}", deviceName, action, command);
+        }
+
         // 检查影响的行数
         my_ulonglong affectedRows = mysql_stmt_affected_rows(stmt);
         mysql_stmt_close(stmt);
@@ -1016,6 +1116,90 @@ bool DeviceRepository::controlGroup(const std::string& group_name, const std::st
     catch(const std::exception& e)
     {
         spdlog::error("控制设备组失败: {}", e.what());
+        return false;
+    }
+}
+
+bool DeviceRepository::updateDeviceStatus(const std::string& deviceName, const std::string& status)
+{
+    try
+    {
+        MYSQL* conn = dbConnection.getConnection();
+        if (conn == nullptr) {
+            spdlog::error("无法获取数据库连接");
+            return false;
+        }
+
+        // 准备SQL语句
+        std::string sql = "UPDATE devices SET status = ?, updated_at = NOW() WHERE name = ?";
+        MYSQL_STMT* stmt = mysql_stmt_init(conn);
+        if (!stmt) {
+            throw std::runtime_error("无法初始化SQL语句");
+        }
+
+        if (mysql_stmt_prepare(stmt, sql.c_str(), sql.length()) != 0) {
+            std::string error = mysql_stmt_error(stmt);
+            mysql_stmt_close(stmt);
+            throw std::runtime_error("准备SQL语句失败: " + error);
+        }
+
+        // 绑定参数
+        MYSQL_BIND bind[2];
+        memset(bind, 0, sizeof(bind));
+        
+        // 存储字符串长度
+        unsigned long lengths[2];
+        
+        // 为每个字符串创建足够大的缓冲区
+        char statusBuffer[256];
+        char nameBuffer[256];
+        
+        // 复制字符串到缓冲区
+        strncpy(statusBuffer, status.c_str(), sizeof(statusBuffer) - 1);
+        strncpy(nameBuffer, deviceName.c_str(), sizeof(nameBuffer) - 1);
+        
+        // 确保字符串以null结尾
+        statusBuffer[sizeof(statusBuffer) - 1] = '\0';
+        nameBuffer[sizeof(nameBuffer) - 1] = '\0';
+
+        // status
+        bind[0].buffer_type = MYSQL_TYPE_STRING;
+        bind[0].buffer = statusBuffer;
+        bind[0].buffer_length = sizeof(statusBuffer);
+        bind[0].length = &lengths[0];
+        lengths[0] = status.length();
+
+        // name
+        bind[1].buffer_type = MYSQL_TYPE_STRING;
+        bind[1].buffer = nameBuffer;
+        bind[1].buffer_length = sizeof(nameBuffer);
+        bind[1].length = &lengths[1];
+        lengths[1] = deviceName.length();
+
+        if (mysql_stmt_bind_param(stmt, bind) != 0) {
+            std::string error = mysql_stmt_error(stmt);
+            mysql_stmt_close(stmt);
+            throw std::runtime_error("绑定参数失败: " + error);
+        }
+
+        // 执行语句
+        if (mysql_stmt_execute(stmt) != 0) {
+            std::string error = mysql_stmt_error(stmt);
+            mysql_stmt_close(stmt);
+            throw std::runtime_error("执行SQL语句失败: " + error);
+        }
+
+        // 检查影响的行数
+        my_ulonglong affectedRows = mysql_stmt_affected_rows(stmt);
+        mysql_stmt_close(stmt);
+        
+        spdlog::info("更新设备状态: 设备名称={}, 状态={}, 影响行数={}", deviceName, status, affectedRows);
+
+        return affectedRows > 0;
+    }
+    catch(const std::exception& e)
+    {
+        spdlog::error("更新设备状态失败: {}", e.what());
         return false;
     }
 }

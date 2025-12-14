@@ -23,15 +23,18 @@ public:
     
     // 更新设备信息
     bool updateDevice(const Device& device);
+
+    // 更新设备状态
+    bool updateDeviceStatus(const std::string& deviceName, const std::string& status);
     
     // 删除设备
     bool deleteDevice(int id);
 
     // 控制设备
-    bool controlDevice(int id, const std::string& power, int brightness);
+    bool controlDevice(int id, const std::string& action, int brightness);
 
     // 分组控制设备
-    bool controlGroup(const std::string& group_name, const std::string& power, int brightness);
+    bool controlGroup(const std::string& action, const std::string& group_name, const std::string& power, int brightness);
 
     // 批量控制设备
     bool batchControl(const std::vector<int>& device_ids, const std::string& power, int brightness);

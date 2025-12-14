@@ -87,6 +87,11 @@ bool LampMonitor::start()
         return false;
     }
 
+    // 订阅检查在线主题
+    if(!mqtt_client->subscribe(lamp_isOnline_topic + "+")) {
+        return false;
+    }
+
     std::cout << "LampMonitor已启动并订阅相关控制主题." << std::endl;
     std::cout << "===============================" << std::endl;
     return true;
@@ -103,18 +108,26 @@ void LampMonitor::controlLamp(const std::string& command, const std::string &val
 {
     json control_msg;
     control_msg["command"] = command;
-    control_msg["value"] = value;
     control_msg["group"] = std::string(1, group);
     control_msg["lamp_id"] = lamp_id;
     control_msg["timestamp"] = getCurrentTimestamp();
 
-    if (value == "ON")
+    if (strcmp(command.c_str(), "switch") == 0)
+    {
+        control_msg["value"] = value;
+    }
+    else if (strcmp(command.c_str(), "dim") == 0)
     {
         control_msg["brightness"] = brightness;
     }
     else
     {
-        control_msg["brightness"] = 0;
+        // 对于其他命令，保留原有的value字段
+        control_msg["value"] = value;
+        if (strcmp(command.c_str(), "dim") == 0)
+        {
+            control_msg["brightness"] = brightness;
+        }
     }
     
     std::string topic = lamp_control_topic + lamp_id;
@@ -132,7 +145,8 @@ void LampMonitor::onMessageReceived(const std::string &topic, const std::string 
         json msg = json::parse(payload);
 
          // 根据 topic 前缀区分处理逻辑，避免直接访问不存在的字段
-        if (topic.rfind("lamp/control/", 0) == 0) {
+        if (topic.rfind("lamp/control/", 0) == 0) 
+        {
             std::string lamp_id = msg.value("lamp_id", "");
             std::string command = msg.value("command", "");
             std::string value_ = msg.value("value", "");
@@ -141,14 +155,27 @@ void LampMonitor::onMessageReceived(const std::string &topic, const std::string 
             std::cout << "控制灯 " << lamp_id << " 执行命令: " << command << " 亮度: " << brightness << std::endl;
             //publishLampStatus(lamp_id, value_, brightness);
         }
-        else if (topic.rfind("lamp/status/", 0) == 0) {command
+        else if (topic.rfind("lamp/status/", 0) == 0) 
+        {
             std::string lamp_id = msg.value("lamp_id", "");
             std::string status = msg.value("status", "");
             int brightness = msg.value("brightness", 0);
 
             std::cout << "收到状态消息 for " << lamp_id << " 状态: " << status << " 亮度: " << brightness << std::endl;
         }
-        else {
+        else if (topic.rfind("lamp/isOnline/", 0) == 0) 
+        {
+            std::string lamp_id = msg.value("lamp_id", "");
+            std::string status = msg.value("status", "");
+            // 创建DeviceRepository实例
+            DeviceRepository deviceRepo;
+
+            deviceRepo.updateDeviceStatus(lamp_id, status);
+
+            std::cout << "收到检查在线消息 for " << lamp_id << " 在线状态: " << status << std::endl;
+        }
+        else 
+        {
             std::cout << "[WARN] 未知主题: " << topic << std::endl;
         }
     }

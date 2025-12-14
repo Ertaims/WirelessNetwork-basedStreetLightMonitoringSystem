@@ -1,6 +1,7 @@
 #pragma once
 #include "mqtt/MQTTClientCpp.h"
 #include <nlohmann/json.hpp>
+#include "http/Repositories/DeviceRepository.h"
 
 using json = nlohmann::json;
 
@@ -38,6 +39,7 @@ private:
     // 主题格式
     const std::string lamp_control_topic = "lamp/control/";
     const std::string lamp_status_topic = "lamp/status/";
+    const std::string lamp_isOnline_topic = "lamp/isOnline/";
     
     // 单例实例
     static LampMonitor* instance;

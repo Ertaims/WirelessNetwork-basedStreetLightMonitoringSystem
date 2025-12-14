@@ -455,8 +455,10 @@ void DeviceHandler::handleControlGroup(const httplib::Request& req, httplib::Res
         // 正确初始化power字符串
         std::string power = (brightness > 0) ? "ON" : "OFF";
 
+        std::string action = jsonData["action"];
+
         // 控制设备组
-        if(deviceRepo->controlGroup(group, power, brightness))
+        if(deviceRepo->controlGroup(action, group, power, brightness))
         {
             res.status = Constants::RESPONSE_SUCCESS;
             res.set_content(R"({"success": true, "message": "设备组控制成功"})", "application/json");
